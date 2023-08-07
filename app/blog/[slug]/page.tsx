@@ -88,7 +88,7 @@ const renderer: any = {
 
 export default async function Blog({params}: { params: { slug: string } }) {
     const res = await listPageBlock(params.slug)
-    const blocks: Block[] = res.data.results
+    const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
 
     let tmp_list_disc: any = []

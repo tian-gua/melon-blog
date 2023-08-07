@@ -6,7 +6,7 @@ export default async function Home() {
     const database = await getDatabaseData()
     const blogGroup = new Map<string, Blog[]>()
 
-    const results: NotionData[] = database.data.results
+    const results: NotionData[] = database.data ? database.data.results : database.results
     for (const resultItem of results) {
 
         const blogId = resultItem.id
