@@ -53,10 +53,16 @@ export default async function Home() {
             )
         }
 
+        let categoryName = category
+        // 判断类型名称是否包含字符'-'
+        if (category.indexOf('-') !== -1) {
+            categoryName = category.split('-')[1]
+        }
+
         return <div className="w-full mt-5 text-[1em]">
             <div className="w-full h-10 px-3 flex justify-end items-center">
                 <h1 className="font-bold text-[1.5em] grow">
-                    {category}
+                    {categoryName}
                 </h1>
                 <a className="text-gray-400" href="/">更多</a>
             </div>
@@ -66,9 +72,17 @@ export default async function Home() {
 
     const renderCategories = () => {
         const domList: React.JSX.Element[] = []
+        let keys: string[] = []
         blogGroup.forEach((value, key) => {
-            domList.push(renderCategoryBlogs(key))
+            keys.push(key)
         })
+        // sort keys
+        keys.sort((a, b) => {
+            return a.localeCompare(b)
+        })
+        for (let key of keys) {
+            domList.push(renderCategoryBlogs(key))
+        }
         return domList
     }
 
