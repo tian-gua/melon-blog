@@ -31,7 +31,7 @@ const renderParagraph = (richTexts: RichText[], color: string) => {
     }
     const richTextDom = []
     for (const richText of richTexts) {
-        let className = "w-full text-[0.9em] text-gray-700"
+        let className = "w-full text-[0.9em]"
         if (richText.annotations.bold) {
             className += " font-bold"
         }
@@ -48,6 +48,7 @@ const renderParagraph = (richTexts: RichText[], color: string) => {
             className += " hover:underline cursor-pointer text-blue-700"
             richTextDom.push(<Link className={className} href={richText.text.link.url}>{richText.plain_text}</Link>)
         } else {
+            className += " text-gray-700"
             richTextDom.push(<span className={className}>{richText.plain_text}</span>)
         }
     }

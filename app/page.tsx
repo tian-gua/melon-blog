@@ -82,13 +82,13 @@ export default async function Home() {
                 <div className="mt-2 text-sm">
                     <p>🧑‍💻 全栈开发者 / Full-stack Developer</p>
                     <p>🤩 正在做一些有趣的事 / Working on something interesting</p>
-                    <p>🥰 <a>tiangua.info</a></p>
+                    <p>🥰 <a>blog.tiangua.info</a></p>
                 </div>
             </div>
             {/*图标跳转区域*/}
             <div className="flex justify-start px-3">
                 <a className="block p-2 rounded-full text-gray-600 transition-colors hover:bg-[#171715] hover:text-white"
-                   href="https://www.baidu.com">
+                   href="/">
                     <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                          strokeLinejoin="round" className="lucide lucide-github">
@@ -107,7 +107,7 @@ export default async function Home() {
                         <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
                     </svg>
                 </a>
-                <a className="block p-2 rounded-full text-gray-600 transition-colors hover:bg-[#1d9bf0] hover:text-white">
+                <a className="block p-2 rounded-full text-gray-600 transition-colors hover:bg-[#1d9bf0] hover:text-white" href="/">
                     <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                          fill="none"
                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
