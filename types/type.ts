@@ -107,6 +107,10 @@ export type Block = {
         rich_text: RichText[],
         color: string,
     },
+    quote: {
+        rich_text: RichText[],
+        color: string,
+    },
     image: {
         caption: [],
         type: string,

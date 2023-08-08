@@ -1,6 +1,7 @@
 import React from "react";
 import {NotionData, Blog} from "@/types/type";
 import {getDatabaseData} from "@/api/notion";
+import Link from "next/link";
 
 export default async function Home() {
     const database = await getDatabaseData()
@@ -46,18 +47,18 @@ export default async function Home() {
         for (const blog of blogs) {
             domList.push(
                 <div className="w-full h-10 px-3 flex justify-end items-center hover:bg-gray-100 rounded-md">
-                    <a className="grow" href={"/blog/" + blog.id}>{blog.title}</a>
+                    <a className="grow" href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
                     <span className="text-gray-400">{blog.date}</span>
                 </div>
             )
         }
 
-        return <div className="w-full mt-5 text-[14px]">
+        return <div className="w-full mt-5 text-[1em]">
             <div className="w-full h-10 px-3 flex justify-end items-center">
-                <h1 className="font-bold text-xl grow">
+                <h1 className="font-bold text-[1.5em] grow">
                     {category}
                 </h1>
-                <a className="text-gray-400" href="https://www.baidu.com">更多</a>
+                <a className="text-gray-400" href="/">更多</a>
             </div>
             {domList}
         </div>
@@ -75,14 +76,14 @@ export default async function Home() {
         <>
             {/*简介区域*/}
             <div className="w-full h-48 px-3">
-                <h1 className="flex flex-col text-3xl font-bold text-black leading-normal font-mono">
+                <h1 className="flex flex-col text-3xl font-bold leading-normal font-mono">
                     <span>Hello</span>
-                    <span>I am Melon</span>
+                    <span>I'm Melon</span>
                 </h1>
-                <div className="mt-2 text-sm">
+                <div className="mt-2" style={{fontFamily: 'Courier New, STKaiti'}}>
                     <p>🧑‍💻 全栈开发者 / Full-stack Developer</p>
                     <p>🤩 正在做一些有趣的事 / Working on something interesting</p>
-                    <p>🥰 <a>blog.tiangua.info</a></p>
+                    <p>🥰 <Link href="http://blog.tiangua.info">blog.tiangua.info</Link></p>
                 </div>
             </div>
             {/*图标跳转区域*/}
@@ -107,7 +108,8 @@ export default async function Home() {
                         <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
                     </svg>
                 </a>
-                <a className="block p-2 rounded-full text-gray-600 transition-colors hover:bg-[#1d9bf0] hover:text-white" href="/">
+                <a className="block p-2 rounded-full text-gray-600 transition-colors hover:bg-[#1d9bf0] hover:text-white"
+                   href="/">
                     <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                          fill="none"
                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -117,8 +119,9 @@ export default async function Home() {
                     </svg>
                 </a>
             </div>
-
-            {renderCategories()}
+            <div style={{fontFamily: 'Courier New, STKaiti'}}>
+                {renderCategories()}
+            </div>
         </>
     )
 }

@@ -26,7 +26,7 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
                 {/*导航*/}
                 <div className="h-16 w-auto flex justify-end">
                     <div className="h-full w-52 grid content-center">
-                        <div className="h-10 rounded-full flex justify-between items-center px-8 text-sm shadow-md">
+                        <div className="h-10 rounded-full flex justify-between items-center px-8 text-sm shadow-md font-bold text-gray-500" style={{fontFamily: 'Courier New, STKaiti'}}>
                             <a href="/">首页</a>
                             <a href="/">博客</a>
                             <a href="/">作品集</a>

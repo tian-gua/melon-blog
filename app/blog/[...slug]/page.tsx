@@ -9,7 +9,7 @@ const renderHeading2 = (richTexts: RichText[], color: string) => {
     }
     const richTextDom = []
     for (const richText of richTexts) {
-        richTextDom.push(<h2 className="w-full mt-5 mb-2 text-[1.6em] font-bold">{richText.plain_text}</h2>)
+        richTextDom.push(<h2 className="w-full mt-5 mb-2 text-[1.5em] font-bold">{richText.plain_text}</h2>)
     }
     return richTextDom
 }
@@ -31,7 +31,7 @@ const renderParagraph = (richTexts: RichText[], color: string) => {
     }
     const richTextDom = []
     for (const richText of richTexts) {
-        let className = "w-full text-[0.9em]"
+        let className = "w-full text-[1em]"
         if (richText.annotations.bold) {
             className += " font-bold"
         }
@@ -48,7 +48,7 @@ const renderParagraph = (richTexts: RichText[], color: string) => {
             className += " hover:underline cursor-pointer text-blue-700"
             richTextDom.push(<Link className={className} href={richText.text.link.url}>{richText.plain_text}</Link>)
         } else {
-            className += " text-gray-700"
+            className += ""
             richTextDom.push(<span className={className}>{richText.plain_text}</span>)
         }
     }
@@ -81,10 +81,24 @@ const renderList = (richTexts: RichText[], color: string) => {
             richTextDom.push(<Link className="hover:underline text-blue-500"
                                    href={richText.text.link.url}>{richText.plain_text}</Link>)
         } else {
-            richTextDom.push(<span className="text-[0.9em] text-gray-700">{richText.plain_text}</span>)
+            richTextDom.push(<span className="text-[1em]">{richText.plain_text}</span>)
         }
     }
     return <li>{richTextDom}</li>
+}
+
+const renderQuote = (richTexts: RichText[], color: string) => {
+    if (richTexts.length === 0) {
+        return <></>
+    }
+    const richTextDom = []
+    for (const richText of richTexts) {
+        richTextDom.push(<span className="text-[1em]">{richText.plain_text}</span>)
+    }
+    return <blockquote
+        className="p-4 my-4 border-l-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800"><p
+        className="text-xl italic font-medium leading-relaxed text-gray-900 dark:text-white">{richTextDom}</p>
+    </blockquote>
 }
 
 const renderImage = (url: string) => {
@@ -97,13 +111,14 @@ const renderer: any = {
     'paragraph': renderParagraph,
     'bulleted_list_item': renderList,
     'numbered_list_item': renderList,
+    'quote': renderQuote,
     'image': renderImage,
     'code': renderCode,
 }
 
 
-export default async function Blog({params}: { params: { slug: string } }) {
-    const res = await listPageBlock(params.slug)
+export default async function Blog({params}: { params: { slug: string[] } }) {
+    const res = await listPageBlock(params.slug[0])
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
 
@@ -151,7 +166,9 @@ export default async function Blog({params}: { params: { slug: string } }) {
             domList.push(<ol className="list-decimal list-inside mt-5">{tmp_list_decimal}</ol>)
         }
     }
-    return <div className="font-mono mb-20">
+    return <div className="font-mono mb-20" style={{fontFamily: 'Courier New, STKaiti'}}>
+        <h1 className="w-full mx-auto text-center text-[2em]">{decodeURI(params.slug[1])}</h1>
+        <div className="divider"></div>
         {domList}
     </div>
 }
