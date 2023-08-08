@@ -107,5 +107,13 @@ export type Block = {
         rich_text: RichText[],
         color: string,
     },
+    image: {
+        caption: [],
+        type: string,
+        file: {
+            url: string
+            expiry_time: string
+        }
+    },
     [key: string]: any
 }

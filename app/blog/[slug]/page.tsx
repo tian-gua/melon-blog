@@ -38,7 +38,18 @@ const renderParagraph = (richTexts: RichText[], color: string) => {
         if (richText.annotations.italic) {
             className += " italic"
         }
-        richTextDom.push(<span className={className}>{richText.plain_text}</span>)
+        if (richText.annotations.strikethrough) {
+            className += " line-through"
+        }
+        if (richText.annotations.underline) {
+            className += " underline"
+        }
+        if (richText.text.link && richText.text.link.url) {
+            className += " hover:underline cursor-pointer text-blue-700"
+            richTextDom.push(<Link className={className} href={richText.text.link.url}>{richText.plain_text}</Link>)
+        } else {
+            richTextDom.push(<span className={className}>{richText.plain_text}</span>)
+        }
     }
     return <p className="mb-2">{richTextDom}</p>
 }
@@ -75,15 +86,19 @@ const renderList = (richTexts: RichText[], color: string) => {
     return <li>{richTextDom}</li>
 }
 
+const renderImage = (url: string) => {
+    return <img src={url} className="w-full m-5 shadow-lg rounded-lg" alt=""/>
+}
+
 const renderer: any = {
     'heading_2': renderHeading2,
     'heading_3': renderHeading3,
     'paragraph': renderParagraph,
     'bulleted_list_item': renderList,
     'numbered_list_item': renderList,
+    'image': renderImage,
     'code': renderCode,
 }
-
 
 
 export default async function Blog({params}: { params: { slug: string } }) {
@@ -112,6 +127,10 @@ export default async function Blog({params}: { params: { slug: string } }) {
             if (tmp_list_decimal.length !== 0) {
                 domList.push(<ol className="list-decimal list-inside">{tmp_list_decimal}</ol>)
                 tmp_list_decimal = []
+            }
+            if (block.type === 'image') {
+                domList.push(rendererFunc(block[block.type].file.url))
+                continue
             }
             if (rendererFunc) {
                 domList.push(rendererFunc(block[block.type].rich_text, block[block.type].text_color));
