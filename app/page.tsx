@@ -92,7 +92,7 @@ export default async function Home() {
             <div className="w-full h-48 px-3">
                 <h1 className="flex flex-col text-3xl font-bold leading-normal font-mono">
                     <span>Hello</span>
-                    <span>I'm Melon</span>
+                    <span>I&lsquo;m Melon</span>
                 </h1>
                 <div className="mt-2" style={{fontFamily: 'Courier New, STKaiti'}}>
                     <p>🧑‍💻 全栈开发者 / Full-stack Developer</p>
