@@ -89,19 +89,19 @@ export default async function Home() {
     return (
         <>
             {/*简介区域*/}
-            <div className="w-full h-48 px-3">
+            <div className="w-full h-max px-3">
                 <h1 className="flex flex-col text-3xl font-bold leading-normal font-mono">
                     <span>Hello</span>
                     <span>I&lsquo;m Melon</span>
                 </h1>
-                <div className="mt-2" style={{fontFamily: 'Courier New, STKaiti'}}>
+                <div className="mt-2 text-gray-600 text-base antialiased">
                     <p>🧑‍💻 全栈开发者 / Full-stack Developer</p>
                     <p>🤩 正在做一些有趣的事 / Working on something interesting</p>
                     <p>🥰 <Link href="http://blog.tiangua.info">blog.tiangua.info</Link></p>
                 </div>
             </div>
             {/*图标跳转区域*/}
-            <div className="flex justify-start px-3">
+            <div className="flex justify-start px-3 mt-5">
                 <a className="block p-2 rounded-full text-gray-600 transition-colors hover:bg-[#171715] hover:text-white"
                    href="/">
                     <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -133,7 +133,7 @@ export default async function Home() {
                     </svg>
                 </a>
             </div>
-            <div style={{fontFamily: 'Courier New, STKaiti'}}>
+            <div className="text-base antialiased">
                 {renderCategories()}
             </div>
         </>

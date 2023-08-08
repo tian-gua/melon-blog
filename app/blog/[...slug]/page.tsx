@@ -31,7 +31,7 @@ const renderParagraph = (richTexts: RichText[], color: string) => {
     }
     const richTextDom = []
     for (const richText of richTexts) {
-        let className = "w-full text-[1em]"
+        let className = "w-full"
         if (richText.annotations.bold) {
             className += " font-bold"
         }
@@ -81,7 +81,7 @@ const renderList = (richTexts: RichText[], color: string) => {
             richTextDom.push(<Link className="hover:underline text-blue-500"
                                    href={richText.text.link.url}>{richText.plain_text}</Link>)
         } else {
-            richTextDom.push(<span className="text-[1em]">{richText.plain_text}</span>)
+            richTextDom.push(<span>{richText.plain_text}</span>)
         }
     }
     return <li>{richTextDom}</li>
@@ -93,7 +93,7 @@ const renderQuote = (richTexts: RichText[], color: string) => {
     }
     const richTextDom = []
     for (const richText of richTexts) {
-        richTextDom.push(<span className="text-[1em]">{richText.plain_text}</span>)
+        richTextDom.push(<span>{richText.plain_text}</span>)
     }
     return <blockquote
         className="p-4 my-4 border-l-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800"><p
@@ -166,9 +166,11 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
             domList.push(<ol className="list-decimal list-inside mt-5">{tmp_list_decimal}</ol>)
         }
     }
-    return <div className="font-mono mb-20" style={{fontFamily: 'Courier New, STKaiti'}}>
-        <h1 className="w-full mx-auto text-center text-[2em]">{decodeURI(params.slug[1])}</h1>
+    return <div className="font-mono mb-20">
+        <h1 className="w-full mx-auto text-center text-[2em]">{decodeURIComponent(params.slug[1])}</h1>
         <div className="divider"></div>
-        {domList}
+        <div className="text-base antialiased">
+            {domList}
+        </div>
     </div>
 }
