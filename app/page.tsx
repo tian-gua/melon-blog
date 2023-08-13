@@ -40,7 +40,7 @@ export default async function Home() {
             return <></>
         }
         blogs?.sort((a, b) => {
-            return a.date.localeCompare(b.date)
+            return b.date.localeCompare(a.date)
         })
 
         const domList: React.JSX.Element[] = []
@@ -87,10 +87,10 @@ export default async function Home() {
     }
 
     return (
-        <>
+        <div className="font-mono">
             {/*简介区域*/}
             <div className="w-full h-max px-3">
-                <h1 className="flex flex-col text-3xl font-bold leading-normal font-mono">
+                <h1 className="flex flex-col text-3xl font-bold leading-normal">
                     <span>Hello</span>
                     <span>I&lsquo;m Melon</span>
                 </h1>
@@ -136,6 +136,6 @@ export default async function Home() {
             <div className="text-base antialiased">
                 {renderCategories()}
             </div>
-        </>
+        </div>
     )
 }
