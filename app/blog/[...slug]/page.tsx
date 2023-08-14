@@ -5,41 +5,7 @@ import Link from "next/link";
 import 'highlight.js/styles/github-dark.css';
 import hljs from 'highlight.js';
 
-
-const renderHeading1 = (paragraphBlock: ParagraphBlock) => {
-    if (paragraphBlock.rich_text.length === 0) {
-        return <></>
-    }
-    const richTextDom = []
-    for (const richText of paragraphBlock.rich_text) {
-        richTextDom.push(<h2 className="w-full mt-5 mb-2 text-[1.5em] font-bold">{richText.plain_text}</h2>)
-    }
-    return richTextDom
-}
-
-const renderHeading2 = (paragraphBlock: ParagraphBlock) => {
-    if (paragraphBlock.rich_text.length === 0) {
-        return <></>
-    }
-    const richTextDom = []
-    for (const richText of paragraphBlock.rich_text) {
-        richTextDom.push(<h2 className="w-full mt-5 mb-2 text-[1.3em] font-bold">{richText.plain_text}</h2>)
-    }
-    return richTextDom
-}
-
-const renderHeading3 = (paragraphBlock: ParagraphBlock) => {
-    if (paragraphBlock.rich_text.length === 0) {
-        return <></>
-    }
-    const richTextDom = []
-    for (const richText of paragraphBlock.rich_text) {
-        richTextDom.push(<h3 className="w-full mt-5 mb-2 text-[1.1em] font-bold">{richText.plain_text}</h3>)
-    }
-    return richTextDom
-}
-
-const renderParagraph = (paragraphBlock: ParagraphBlock) => {
+const renderParagraph = (paragraphBlock: ParagraphBlock, type: string) => {
     if (paragraphBlock.rich_text.length === 0) {
         return <></>
     }
@@ -58,34 +24,34 @@ const renderParagraph = (paragraphBlock: ParagraphBlock) => {
         if (richText.annotations.underline) {
             className += " underline"
         }
+        if (richText.annotations.code) {
+            className += " bg-gray-600 p-1 rounded-md text-slate-100 text-[0.8em] font-bold"
+        }
         if (richText.text.link && richText.text.link.url) {
             className += " hover:underline cursor-pointer text-blue-700"
             richTextDom.push(<Link className={className} href={richText.text.link.url}>{richText.plain_text}</Link>)
         } else {
-            className += ""
+            if (type === 'heading_1') {
+                className += " text-[1.5em] font-bold block mt-5 mb-2"
+            } else if (type === 'heading_2') {
+                className += " text-[1.3em] font-bold block mt-5 mb-2"
+            } else if (type === 'heading_3') {
+                className += " text-[1.1em] font-bold block mt-5 mb-2"
+            }
+
             richTextDom.push(<span className={className}>{richText.plain_text}</span>)
         }
     }
-    return <p className="mb-2">{richTextDom}</p>
+    if (type === 'bulleted_list_item' || type === 'numbered_list_item') {
+        return <li>{richTextDom}</li>
+    } else if (type === 'heading_1' || type === 'heading_2' || type === 'heading_3') {
+        return <span>{richTextDom}</span>
+    } else {
+        return <p className="mb-2">{richTextDom}</p>
+    }
 }
 
-const renderList = (paragraphBlock: ParagraphBlock) => {
-    if (paragraphBlock.rich_text.length === 0) {
-        return <></>
-    }
-    const richTextDom = []
-    for (const richText of paragraphBlock.rich_text) {
-        if (richText.type === 'text' && richText.text.link && richText.text.link.url) {
-            richTextDom.push(<Link className="hover:underline text-blue-500"
-                                   href={richText.text.link.url}>{richText.plain_text}</Link>)
-        } else {
-            richTextDom.push(<span>{richText.plain_text}</span>)
-        }
-    }
-    return <li>{richTextDom}</li>
-}
-
-const renderQuote = (paragraphBlock: ParagraphBlock) => {
+const renderQuote = (paragraphBlock: ParagraphBlock, type: string) => {
     if (paragraphBlock.rich_text.length === 0) {
         return <></>
     }
@@ -99,7 +65,7 @@ const renderQuote = (paragraphBlock: ParagraphBlock) => {
     </blockquote>
 }
 
-const renderCode = (codeBlock: CodeBlock) => {
+const renderCode = (codeBlock: CodeBlock, type: string) => {
     if (codeBlock.rich_text.length === 0) {
         return <></>
     }
@@ -115,7 +81,7 @@ const renderCode = (codeBlock: CodeBlock) => {
         hlDom.push(<pre><code dangerouslySetInnerHTML={{__html: line}}/></pre>)
         i++
     })
-    return <div className="w-full mt-5 mockup-code">{hlDom}</div>
+    return <div className="w-full mockup-code mb-5">{hlDom}</div>
 }
 
 const renderImage = (url: string) => {
@@ -123,12 +89,12 @@ const renderImage = (url: string) => {
 }
 
 const renderer: any = {
-    'heading_1': renderHeading1,
-    'heading_2': renderHeading2,
-    'heading_3': renderHeading3,
+    'heading_1': renderParagraph,
+    'heading_2': renderParagraph,
+    'heading_3': renderParagraph,
     'paragraph': renderParagraph,
-    'bulleted_list_item': renderList,
-    'numbered_list_item': renderList,
+    'bulleted_list_item': renderParagraph,
+    'numbered_list_item': renderParagraph,
     'quote': renderQuote,
     'image': renderImage,
     'code': renderCode,
@@ -147,11 +113,11 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
         for (const block of blocks) {
             const rendererFunc = renderer[block.type]
             if (block.type === 'bulleted_list_item') {
-                tmp_list_disc.push(rendererFunc(block[block.type]))
+                tmp_list_disc.push(rendererFunc(block[block.type], block.type))
                 continue
             }
             if (block.type === 'numbered_list_item') {
-                tmp_list_decimal.push(rendererFunc(block[block.type]))
+                tmp_list_decimal.push(rendererFunc(block[block.type], block.type))
                 continue
             }
             if (tmp_list_disc.length !== 0) {
@@ -167,9 +133,9 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
                 continue
             }
             if (rendererFunc) {
-                domList.push(rendererFunc(block[block.type]))
+                domList.push(rendererFunc(block[block.type], block.type))
             } else {
-                domList.push(renderParagraph(block[block.type]))
+                domList.push(renderParagraph(block[block.type], block.type))
             }
         }
         if (tmp_list_disc.length !== 0) {
