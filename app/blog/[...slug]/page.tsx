@@ -1,36 +1,50 @@
 import React from "react"
 import {listPageBlock} from "@/api/notion";
-import {Block, RichText} from "@/types/type";
+import {Block, RichText, ParagraphBlock, CodeBlock} from "@/types/type";
 import Link from "next/link";
+import 'highlight.js/styles/github-dark.css';
+import hljs from 'highlight.js';
 
-const renderHeading2 = (richTexts: RichText[], color: string) => {
-    if (richTexts.length === 0) {
+
+const renderHeading1 = (paragraphBlock: ParagraphBlock) => {
+    if (paragraphBlock.rich_text.length === 0) {
         return <></>
     }
     const richTextDom = []
-    for (const richText of richTexts) {
+    for (const richText of paragraphBlock.rich_text) {
         richTextDom.push(<h2 className="w-full mt-5 mb-2 text-[1.5em] font-bold">{richText.plain_text}</h2>)
     }
     return richTextDom
 }
 
-const renderHeading3 = (richTexts: RichText[], color: string) => {
-    if (richTexts.length === 0) {
+const renderHeading2 = (paragraphBlock: ParagraphBlock) => {
+    if (paragraphBlock.rich_text.length === 0) {
         return <></>
     }
     const richTextDom = []
-    for (const richText of richTexts) {
-        richTextDom.push(<h3 className="w-full mt-5 mb-2 text-[1.3em] font-bold">{richText.plain_text}</h3>)
+    for (const richText of paragraphBlock.rich_text) {
+        richTextDom.push(<h2 className="w-full mt-5 mb-2 text-[1.3em] font-bold">{richText.plain_text}</h2>)
     }
     return richTextDom
 }
 
-const renderParagraph = (richTexts: RichText[], color: string) => {
-    if (richTexts.length === 0) {
+const renderHeading3 = (paragraphBlock: ParagraphBlock) => {
+    if (paragraphBlock.rich_text.length === 0) {
         return <></>
     }
     const richTextDom = []
-    for (const richText of richTexts) {
+    for (const richText of paragraphBlock.rich_text) {
+        richTextDom.push(<h3 className="w-full mt-5 mb-2 text-[1.1em] font-bold">{richText.plain_text}</h3>)
+    }
+    return richTextDom
+}
+
+const renderParagraph = (paragraphBlock: ParagraphBlock) => {
+    if (paragraphBlock.rich_text.length === 0) {
+        return <></>
+    }
+    const richTextDom = []
+    for (const richText of paragraphBlock.rich_text) {
         let className = "w-full"
         if (richText.annotations.bold) {
             className += " font-bold"
@@ -55,28 +69,12 @@ const renderParagraph = (richTexts: RichText[], color: string) => {
     return <p className="mb-2">{richTextDom}</p>
 }
 
-const renderCode = (richTexts: RichText[], color: string) => {
-    if (richTexts.length === 0) {
-        return <></>
-    }
-    const richTextDom: any = []
-
-    for (const richText of richTexts) {
-        let i = 1
-        richText.plain_text.split('\n').forEach((line) => {
-            richTextDom.push(<pre data-prefix={i}>{line}</pre>)
-            i++
-        })
-    }
-    return <div className="w-full mockup-code mt-5">{richTextDom}</div>
-}
-
-const renderList = (richTexts: RichText[], color: string) => {
-    if (richTexts.length === 0) {
+const renderList = (paragraphBlock: ParagraphBlock) => {
+    if (paragraphBlock.rich_text.length === 0) {
         return <></>
     }
     const richTextDom = []
-    for (const richText of richTexts) {
+    for (const richText of paragraphBlock.rich_text) {
         if (richText.type === 'text' && richText.text.link && richText.text.link.url) {
             richTextDom.push(<Link className="hover:underline text-blue-500"
                                    href={richText.text.link.url}>{richText.plain_text}</Link>)
@@ -87,12 +85,12 @@ const renderList = (richTexts: RichText[], color: string) => {
     return <li>{richTextDom}</li>
 }
 
-const renderQuote = (richTexts: RichText[], color: string) => {
-    if (richTexts.length === 0) {
+const renderQuote = (paragraphBlock: ParagraphBlock) => {
+    if (paragraphBlock.rich_text.length === 0) {
         return <></>
     }
     const richTextDom = []
-    for (const richText of richTexts) {
+    for (const richText of paragraphBlock.rich_text) {
         richTextDom.push(<span>{richText.plain_text}</span>)
     }
     return <blockquote
@@ -101,11 +99,31 @@ const renderQuote = (richTexts: RichText[], color: string) => {
     </blockquote>
 }
 
+const renderCode = (codeBlock: CodeBlock) => {
+    if (codeBlock.rich_text.length === 0) {
+        return <></>
+    }
+
+    const hlDom: any = []
+    let code = ''
+    for (const richText of codeBlock.rich_text) {
+        code += richText.plain_text
+    }
+    const hlCode = hljs.highlight(code, {language: codeBlock.language}).value
+    let i = 1
+    hlCode.split('\n').forEach((line) => {
+        hlDom.push(<pre><code dangerouslySetInnerHTML={{__html: line}}/></pre>)
+        i++
+    })
+    return <div className="w-full mt-5 mockup-code">{hlDom}</div>
+}
+
 const renderImage = (url: string) => {
     return <img src={url} className="w-full m-5 shadow-lg rounded-lg" alt=""/>
 }
 
 const renderer: any = {
+    'heading_1': renderHeading1,
     'heading_2': renderHeading2,
     'heading_3': renderHeading3,
     'paragraph': renderParagraph,
@@ -129,11 +147,11 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
         for (const block of blocks) {
             const rendererFunc = renderer[block.type]
             if (block.type === 'bulleted_list_item') {
-                tmp_list_disc.push(rendererFunc(block[block.type].rich_text, block[block.type].color))
+                tmp_list_disc.push(rendererFunc(block[block.type]))
                 continue
             }
             if (block.type === 'numbered_list_item') {
-                tmp_list_decimal.push(rendererFunc(block[block.type].rich_text, block[block.type].color))
+                tmp_list_decimal.push(rendererFunc(block[block.type]))
                 continue
             }
             if (tmp_list_disc.length !== 0) {
@@ -149,14 +167,9 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
                 continue
             }
             if (rendererFunc) {
-                domList.push(rendererFunc(block[block.type].rich_text, block[block.type].text_color));
+                domList.push(rendererFunc(block[block.type]))
             } else {
-                const richText: RichText = block[block.type].rich_text[0];
-                if (richText.type === 'text') {
-                    domList.push(<div key={block.id} className="w-full border">{richText.plain_text}</div>)
-                } else {
-                    domList.push(<div key={block.id} className="w-full border text-red-600">{richText.plain_text}</div>)
-                }
+                domList.push(renderParagraph(block[block.type]))
             }
         }
         if (tmp_list_disc.length !== 0) {
@@ -167,7 +180,7 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
         }
     }
     return <div className="font-mono mb-20">
-        <h1 className="w-full mx-auto text-center text-[2em]">{decodeURIComponent(params.slug[1])}</h1>
+        <h1 className="w-full mx-auto text-center text-[1.8em]">{decodeURIComponent(params.slug[1])}</h1>
         <div className="divider"></div>
         <div className="text-base antialiased">
             {domList}

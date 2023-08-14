@@ -87,37 +87,34 @@ export type Block = {
     has_children: boolean,
     archived: boolean,
     type: string,
-    heading_1: {
-        rich_text: RichText[],
-        color: string,
-    },
-    heading_2: {
-        rich_text: RichText[],
-        color: string,
-    },
-    heading_3: {
-        rich_text: RichText[],
-        color: string,
-    },
-    paragraph: {
-        rich_text: RichText[],
-        color: string,
-    },
-    bulleted_list_item: {
-        rich_text: RichText[],
-        color: string,
-    },
-    quote: {
-        rich_text: RichText[],
-        color: string,
-    },
-    image: {
-        caption: [],
-        type: string,
-        file: {
-            url: string
-            expiry_time: string
-        }
-    },
+    heading_1: ParagraphBlock,
+    heading_2: ParagraphBlock,
+    heading_3: ParagraphBlock,
+    paragraph: ParagraphBlock,
+    bulleted_list_item: ParagraphBlock,
+    quote: ParagraphBlock,
+    image: ImageBlock,
+    code: CodeBlock,
     [key: string]: any
+}
+
+
+export type CodeBlock = {
+    caption: [],
+    language: string,
+    rich_text: RichText[],
+}
+
+export type ImageBlock = {
+    caption: [],
+    type: string,
+    file: {
+        url: string
+        expiry_time: string
+    }
+}
+
+export type ParagraphBlock = {
+    rich_text: RichText[],
+    color: string,
 }
