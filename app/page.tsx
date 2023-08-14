@@ -5,8 +5,8 @@ import Link from "next/link";
 
 export default async function Home() {
     const database = await getDatabaseData()
+    let aboutMe = ''
     const blogGroup = new Map<string, Blog[]>()
-
     const results: NotionData[] = database.data ? database.data.results : database.results
     for (const resultItem of results) {
 
@@ -17,20 +17,26 @@ export default async function Home() {
             const blogTitle = blogProperties.Title.title[0].plain_text
             const date = blogProperties.Date.date.start
             const category = blogProperties.Category.select.name
+            const type = blogProperties.Type.select.name
             const status = blogProperties.Status.select.name
             const tags = blogProperties.Tags.multi_select.map(i => i.name)
 
-            if (!blogGroup.has(category)) {
-                blogGroup.set(category, [])
+            if (type === '关于我') {
+                aboutMe = blogId
+            } else if (type === '文章') {
+                if (!blogGroup.has(category)) {
+                    blogGroup.set(category, [])
+                }
+                blogGroup.get(category)?.push({
+                    id: blogId,
+                    title: blogTitle,
+                    date: date,
+                    type: type,
+                    category: category,
+                    tags: tags,
+                    Status: status
+                })
             }
-            blogGroup.get(category)?.push({
-                id: blogId,
-                title: blogTitle,
-                date: date,
-                category: category,
-                tags: tags,
-                Status: status
-            })
         }
     }
 

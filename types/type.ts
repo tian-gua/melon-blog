@@ -23,7 +23,24 @@ export type Properties = {
             type: string
         }
     },
-    Category: any,
+    Type: {
+        id: string,
+        type: string,
+        select: {
+            id: string,
+            name: string,
+            color: string
+        }
+    },
+    Category: {
+        id: string,
+        type: string,
+        select: {
+            id: string,
+            name: string,
+            color: string
+        }
+    },
     Tags: {
         id: string,
         type: string,
@@ -53,6 +70,7 @@ export type Blog = {
     id: string
     title: string
     date: string
+    type: string
     category: string
     tags: string[]
     Status: string

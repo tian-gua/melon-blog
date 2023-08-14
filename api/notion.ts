@@ -2,26 +2,26 @@ import axios from 'axios'
 
 export async function getDatabaseData() {
     if (process.env.APP_ENV === 'dev') {
-        return axios.post('https://api.notion.com/v1/databases/dac877360d264a8a86a8da23eb2de5a7/query', {}, {
+        return axios.post('https://api.notion.com/v1/databases/' + process.env.DATABASE_ID + '/query', {}, {
             proxy: {
                 protocol: 'http',
                 host: '127.0.0.1',
                 port: 7890,
             },
             headers: {
-                'Authorization': 'Bearer secret_gGr9EzrWixlO2Fn96tqxGtuYDYr0zXAIWLjtyh0ndz0',
-                'Notion-Version': '2022-06-28'
+                'Authorization': process.env.NOTION_AUTH as string,
+                'Notion-Version': process.env.NOTION_VERSION as string
             }
         })
     }
 
-    const res = await fetch('https://api.notion.com/v1/databases/dac877360d264a8a86a8da23eb2de5a7/query', {
+    const res = await fetch('https://api.notion.com/v1/databases/' + process.env.DATABASE_ID + '/query', {
         next: {
             revalidate: 60
         },
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer secret_gGr9EzrWixlO2Fn96tqxGtuYDYr0zXAIWLjtyh0ndz0',
+            'Authorization': process.env.NOTION_AUTH as string,
             'Notion-Version': '2022-06-28'
         }
     })
@@ -40,8 +40,8 @@ export async function listPageBlock(id: string) {
                 port: 7890,
             },
             headers: {
-                'Authorization': 'Bearer secret_gGr9EzrWixlO2Fn96tqxGtuYDYr0zXAIWLjtyh0ndz0',
-                'Notion-Version': '2022-06-28'
+                'Authorization': process.env.NOTION_AUTH as string,
+                'Notion-Version': process.env.NOTION_VERSION as string
             }
         })
     }
@@ -52,8 +52,8 @@ export async function listPageBlock(id: string) {
         },
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer secret_gGr9EzrWixlO2Fn96tqxGtuYDYr0zXAIWLjtyh0ndz0',
-            'Notion-Version': '2022-06-28'
+            'Authorization': process.env.NOTION_AUTH as string,
+            'Notion-Version': process.env.NOTION_VERSION as string
         }
     })
     if (!res.ok) {

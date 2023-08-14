@@ -7,7 +7,7 @@ import React from "react";
 const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
-    title: 'Melon Blog',
+    title: process.env.BLOG_NAME,
     description: '欢迎来到 Melon 的博客',
 }
 
@@ -19,7 +19,7 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
             <div
                 className="bg-white w-1/2 max-w-4xl h-full mt-10 border-gray-500 flex justify-between flex-wrap box-border">
                 {/*头像*/}
-                <Link className="w-24 mask mask-hexagon" href="/intro">
+                <Link className="w-24 mask mask-hexagon" href="/blog/c17e78bf-961b-4af5-aada-252ef6af0093/关于我">
                     <img className="h-full w-full rounded-full"
                          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw%2F93069569-a68a-4df3-8b8b-a40428037f06%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1692527575&t=6013556333c4744697f482db82c5205c"/>
                 </Link>
