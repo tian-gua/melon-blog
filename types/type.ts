@@ -105,25 +105,29 @@ export type Block = {
     has_children: boolean,
     archived: boolean,
     type: string,
-    heading_1: ParagraphBlock,
-    heading_2: ParagraphBlock,
-    heading_3: ParagraphBlock,
-    paragraph: ParagraphBlock,
-    bulleted_list_item: ParagraphBlock,
-    quote: ParagraphBlock,
-    image: ImageBlock,
-    code: CodeBlock,
+    heading_1: Paragraph,
+    heading_2: Paragraph,
+    heading_3: Paragraph,
+    paragraph: Paragraph,
+    bulleted_list_item: Paragraph,
+    quote: Paragraph,
+    image: Image,
+    code: Code,
+    table: Table,
+    table_row: TableRow,
+    column_list: ColumnList,
+    column: Column,
     [key: string]: any
 }
 
 
-export type CodeBlock = {
+export type Code = {
     caption: [],
     language: string,
     rich_text: RichText[],
 }
 
-export type ImageBlock = {
+export type Image = {
     caption: [],
     type: string,
     file: {
@@ -132,7 +136,25 @@ export type ImageBlock = {
     }
 }
 
-export type ParagraphBlock = {
+export type Paragraph = {
     rich_text: RichText[],
     color: string,
+}
+
+export type Table = {
+    table_width: number,
+    has_row_header: boolean,
+    has_column_header: boolean,
+}
+
+export type TableRow = {
+    cells: RichText[][]
+}
+
+export type ColumnList = {
+
+}
+
+export type Column = {
+
 }
