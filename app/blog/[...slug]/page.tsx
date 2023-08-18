@@ -105,7 +105,7 @@ const renderTable = async (block: Block) => {
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
     for (const block of blocks) {
-        domList.push(renderer[block.type](block))
+        domList.push(await renderer[block.type](block))
     }
     return <div className="overflow-x-auto">
         <table className="table">
@@ -133,7 +133,7 @@ const renderColumnList = async (block: Block) => {
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
     for (const block of blocks) {
-        domList.push(renderer[block.type](block))
+        domList.push(await renderer[block.type](block))
     }
     return <div key={block.id} className="w-full h-auto flex gap-20 mt-10">{domList}</div>
 }
@@ -143,7 +143,7 @@ const renderColumn = async (block: Block) => {
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
     for (const block of blocks) {
-        domList.push(renderer[block.type](block))
+        domList.push(await renderer[block.type](block))
     }
     return <div key={block.id} className="w-max h-auto">{domList}</div>
 }
@@ -194,7 +194,7 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
                 tmp_list_decimal = []
             }
             if (rendererFunc) {
-                domList.push(rendererFunc(block))
+                domList.push(await rendererFunc(block))
             } else {
                 domList.push(renderParagraph(block))
             }
