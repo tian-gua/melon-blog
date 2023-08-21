@@ -93,7 +93,7 @@ const renderCode = (block: Block) => {
 }
 
 const renderImage = (block: Block) => {
-    return <img key={block.id} src={block.image.file.url} className="mt-10 shadow-lg border border-slate-200 rounded-lg"
+    return <img key={block.id} src={block.image.file.url} className="mt-5 mb-5 rounded-lg mx-auto shadow-lg shadow-gray-300 border border-gray-200"
                 alt=""/>
 }
 
