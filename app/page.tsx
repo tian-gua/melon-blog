@@ -70,7 +70,7 @@ export default async function Home() {
                 <h1 className="font-bold text-[1.5em] grow">
                     {categoryName}
                 </h1>
-                <a className="text-gray-400" href="/">更多</a>
+                <a className="text-gray-400" href={"/category/" + categoryName}>更多</a>
             </div>
             {domList}
         </div>

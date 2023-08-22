@@ -89,7 +89,7 @@ const renderCode = (block: Block) => {
         hlDom.push(<pre key={i}><code dangerouslySetInnerHTML={{__html: line}}/></pre>)
         i++
     })
-    return <div key={block.id} className="w-full mockup-code mb-5">{hlDom}</div>
+    return <div key={block.id} className="w-full mockup-code mb-5 text-[0.9em] font-mono">{hlDom}</div>
 }
 
 const renderImage = (block: Block) => {
