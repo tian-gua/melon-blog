@@ -3,6 +3,8 @@ import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import Link from "next/link";
 import React from "react";
+import Script from "next/script"
+
 
 const inter = Inter({subsets: ['latin']})
 
@@ -14,6 +16,16 @@ export const metadata: Metadata = {
 export default function RootLayout({children,}: { children: React.ReactNode }) {
     return (
         <html>
+        <Script async strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-7QMKKDBWPC"/>
+        <Script id="google-analytics" strategy="afterInteractive" dangerouslySetInnerHTML={{
+            __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                
+                  gtag('config', 'G-7QMKKDBWPC');
+                  `
+        }}/>
         <body className={inter.className}>
         <div className="h-full w-full flex justify-center font-mono">
             <div
@@ -26,7 +38,8 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
                 {/*导航*/}
                 <div className="h-16 w-auto flex justify-end">
                     <div className="h-full w-52 grid content-center">
-                        <div className="h-10 rounded-full flex justify-between items-center px-8 text-sm shadow-md font-bold text-gray-600">
+                        <div
+                            className="h-10 rounded-full flex justify-between items-center px-8 text-sm shadow-md font-bold text-gray-600">
                             <a href="/">首页</a>
                             <a href="/">博客</a>
                             <a href="/">作品集</a>
