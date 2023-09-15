@@ -83,7 +83,11 @@ const renderCode = (block: Block) => {
     for (const richText of block.code.rich_text) {
         code += richText.plain_text
     }
-    const hlCode = hljs.highlight(code, {language: block.code.language}).value
+    let language = block.code.language;
+    if (block.code.language === 'plain text') {
+        language = 'plaintext'
+    }
+    const hlCode = hljs.highlight(code, {language: language}).value
     let i = 0
     hlCode.split('\n').forEach((line) => {
         hlDom.push(<pre key={i}><code dangerouslySetInnerHTML={{__html: line}}/></pre>)
