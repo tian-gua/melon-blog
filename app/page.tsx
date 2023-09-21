@@ -41,13 +41,14 @@ export default async function Home() {
     }
 
     const renderCategoryBlogs = (category: string) => {
-        const blogs: Blog[] | undefined = blogGroup.get(category)
+        let blogs: Blog[] | undefined = blogGroup.get(category)
         if (blogs === undefined) {
             return <></>
         }
         blogs?.sort((a, b) => {
             return b.date.localeCompare(a.date)
         })
+        blogs = blogs.slice(0, 8)
 
         const domList: React.JSX.Element[] = []
         for (const blog of blogs) {
