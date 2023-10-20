@@ -4,6 +4,8 @@ import {Block, RichText} from "@/types/type";
 import Link from "next/link";
 import 'highlight.js/styles/github-dark.css';
 import hljs from 'highlight.js';
+import {util} from "zod";
+import find = util.find;
 
 const renderParagraph = (block: Block) => {
     if (!block || !block[block.type].rich_text) {
@@ -41,7 +43,8 @@ const renderRichText = (richTexts: RichText[], block: Block) => {
         }
         if (richText.text.link && richText.text.link.url) {
             className += " hover:underline cursor-pointer text-blue-700"
-            richTextDom.push(<Link key={index} className={className} href={richText.text.link.url}>{richText.plain_text}</Link>)
+            richTextDom.push(<Link key={index} className={className}
+                                   href={richText.text.link.url}>{richText.plain_text}</Link>)
         } else {
             if (block.type === 'heading_1') {
                 className += " text-[1.5em] font-bold block mt-10 mb-2"
@@ -97,8 +100,29 @@ const renderCode = (block: Block) => {
 }
 
 const renderImage = (block: Block) => {
-    return <img key={block.id} src={block.image.file.url} className="mt-5 mb-5 rounded-lg mx-auto shadow-lg shadow-gray-300 border border-gray-200"
-                alt=""/>
+    let width = 'w-auto'
+    let height = 'h-auto'
+    if (block.image.caption.length > 0) {
+        if (block.image.caption[0].plain_text.includes('[200x200]')) {
+            width = `w-[200px]`
+            height = `h-[200px]`
+        } else if (block.image.caption[0].plain_text.includes('[400x400]')) {
+            width = `w-[400px]`
+            height = `h-[400px]`
+        } else if (block.image.caption[0].plain_text.includes('[800x800]')) {
+            width = `w-[800px]`
+            height = `h-[800px]`
+        } else if (block.image.caption[0].plain_text.includes('[800x600]')) {
+            width = `w-[800px]`
+            height = `h-[600px]`
+        }
+    }
+
+    const style = `mt-5 mb-5 rounded-lg ${width} ${height} max-w-full shadow-lg shadow-gray-300 border border-gray-200`
+    console.log(style)
+    return <img key={block.id} src={block.image.file.url}
+                className={style}
+                alt="image"/>
 }
 
 const renderTable = async (block: Block) => {
@@ -173,6 +197,7 @@ const renderer: any = {
 export default async function Blog({params}: { params: { slug: string[] } }) {
     const res = await listPageBlock(params.slug[0])
     const blocks: Block[] = res.data ? res.data.results : res.results
+    console.log('blocks: ', blocks)
     const domList: any = []
 
     let tmp_list_disc: any = []

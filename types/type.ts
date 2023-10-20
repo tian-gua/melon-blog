@@ -128,7 +128,7 @@ export type Code = {
 }
 
 export type Image = {
-    caption: [],
+    caption: any[],
     type: string,
     file: {
         url: string
