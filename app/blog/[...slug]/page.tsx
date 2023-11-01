@@ -4,14 +4,13 @@ import {Block, RichText} from "@/types/type";
 import Link from "next/link";
 import 'highlight.js/styles/github-dark.css';
 import hljs from 'highlight.js';
-import {util} from "zod";
-import find = util.find;
+import Image from "next/image";
 
-const renderParagraph = (block: Block) => {
+const renderParagraph = async (block: Block) => {
     if (!block || !block[block.type].rich_text) {
         return <></>
     }
-    const richTextDom = renderRichText(block[block.type].rich_text, block)
+    const richTextDom = await renderRichText(block[block.type].rich_text, block)
     if (block.type === 'bulleted_list_item' || block.type === 'numbered_list_item') {
         return <li key={block.id}>{richTextDom}</li>
     } else if (block.type === 'heading_1' || block.type === 'heading_2' || block.type === 'heading_3') {
@@ -21,7 +20,7 @@ const renderParagraph = (block: Block) => {
     }
 }
 
-const renderRichText = (richTexts: RichText[], block: Block) => {
+const renderRichText = async (richTexts: RichText[], block: Block) => {
     const richTextDom = []
     let index = 0
     for (const richText of richTexts) {
@@ -61,7 +60,7 @@ const renderRichText = (richTexts: RichText[], block: Block) => {
     return richTextDom
 }
 
-const renderQuote = (block: Block) => {
+const renderQuote = async (block: Block) => {
     if (block.paragraph.rich_text.length === 0) {
         return <></>
     }
@@ -76,7 +75,7 @@ const renderQuote = (block: Block) => {
     </blockquote>
 }
 
-const renderCode = (block: Block) => {
+const renderCode = async (block: Block) => {
     if (block.code.rich_text.length === 0) {
         return <></>
     }
@@ -99,7 +98,10 @@ const renderCode = (block: Block) => {
     return <div key={block.id} className="w-full mockup-code mb-5 text-[0.9em] font-mono">{hlDom}</div>
 }
 
-const renderImage = (block: Block) => {
+const renderImage = async (block: Block) => {
+    if (new Date(block.image.file.expiry_time).getTime() <= new Date().getTime()) {
+        throw new Error('image expired');
+    }
     let width = 'w-auto'
     let height = 'h-auto'
     if (block.image.caption.length > 0) {
@@ -117,12 +119,8 @@ const renderImage = (block: Block) => {
             height = `h-[600px]`
         }
     }
-
     const style = `mt-5 mb-5 rounded-lg ${width} ${height} max-w-full shadow-lg shadow-gray-300 border border-gray-200`
-    console.log(style)
-    return <img key={block.id} src={block.image.file.url}
-                className={style}
-                alt="image"/>
+    return <img key={block.id} src={block.image.file.url} className={style} alt="image"/>
 }
 
 const renderTable = async (block: Block) => {
@@ -142,7 +140,7 @@ const renderTable = async (block: Block) => {
     </div>
 }
 
-const renderTableRow = (block: Block) => {
+const renderTableRow = async (block: Block) => {
     if (!block || !block.table_row || !block.table_row.cells) {
         return <></>
     }
@@ -150,7 +148,7 @@ const renderTableRow = (block: Block) => {
     const domList: any = []
     let index = 0
     for (const cell of cells) {
-        domList.push(<td key={index} className="border border-gray-300 px-4 py-2">{renderRichText(cell, block)}</td>)
+        domList.push(<td key={index} className="border border-gray-300 px-4 py-2">{await renderRichText(cell, block)}</td>)
         index++
     }
     return <tr key={block.id}>{domList}</tr>
@@ -193,11 +191,9 @@ const renderer: any = {
     'text': renderParagraph,
 }
 
-
-export default async function Blog({params}: { params: { slug: string[] } }) {
+const renderNotionPage = async ({params}: { params: { slug: string[] } }) => {
     const res = await listPageBlock(params.slug[0])
     const blocks: Block[] = res.data ? res.data.results : res.results
-    console.log('blocks: ', blocks)
     const domList: any = []
 
     let tmp_list_disc: any = []
@@ -207,11 +203,11 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
         for (const block of blocks) {
             const rendererFunc = renderer[block.type]
             if (block.type === 'bulleted_list_item') {
-                tmp_list_disc.push(rendererFunc(block))
+                tmp_list_disc.push(await rendererFunc(block))
                 continue
             }
             if (block.type === 'numbered_list_item') {
-                tmp_list_decimal.push(rendererFunc(block))
+                tmp_list_decimal.push(await rendererFunc(block))
                 continue
             }
             if (tmp_list_disc.length !== 0) {
@@ -225,7 +221,7 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
             if (rendererFunc) {
                 domList.push(await rendererFunc(block))
             } else {
-                domList.push(renderParagraph(block))
+                domList.push(await renderParagraph(block))
             }
         }
         if (tmp_list_disc.length !== 0) {
@@ -235,6 +231,7 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
             domList.push(<ol className="list-decimal list-inside mt-5">{tmp_list_decimal}</ol>)
         }
     }
+
     return <div className="font-mono mb-20">
         <h1 className="w-full mx-auto text-center text-[1.8em]">{decodeURIComponent(params.slug[1])}</h1>
         <div className="divider"></div>
@@ -242,4 +239,21 @@ export default async function Blog({params}: { params: { slug: string[] } }) {
             {domList}
         </div>
     </div>
+}
+
+export default async function Blog({params}: { params: { slug: string[] } }) {
+    let domList = <></>
+    try {
+        domList = await renderNotionPage({params})
+    } catch (error) {
+        console.log(error)
+        try {
+            domList = await renderNotionPage({params})
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    return domList
+
 }
