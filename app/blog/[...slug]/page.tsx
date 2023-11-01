@@ -104,7 +104,8 @@ const renderCode = async (block: Block) => {
 }
 
 const renderImage = async (block: Block, options?: RenderOptions) => {
-    if (options && options.checkExpired && new Date(block.image.file.expiry_time).getTime() <= new Date().getTime()) {
+    const now = new Date();
+    if (options && options.checkExpired && new Date(block.image.file.expiry_time).getTime() <= now.getTime()) {
         throw new Error('image expired');
     }
     let width = 'w-auto'
@@ -225,7 +226,7 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }, option
                 tmp_list_decimal = []
             }
             if (rendererFunc) {
-                domList.push(await rendererFunc(block))
+                domList.push(await rendererFunc(block, options))
             } else {
                 domList.push(await renderParagraph(block))
             }
@@ -248,14 +249,13 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }, option
 }
 
 export default async function Blog({params}: { params: { slug: string[] } }) {
-    // let domList = <></>
-    // try {
-    //     domList = await renderNotionPage({params}, {checkExpired: true})
-    // } catch (error) {
-    //     console.log(error)
-    //     domList = await renderNotionPage({params}, {checkExpired: false})
-    // }
-    //
-    // return domList
-    return await renderNotionPage({params}, {checkExpired: true})
+    let domList = <></>
+    try {
+        domList = await renderNotionPage({params}, {checkExpired: true})
+    } catch (error) {
+        console.log(error)
+        domList = await renderNotionPage({params}, {checkExpired: false})
+    }
+
+    return domList
 }
