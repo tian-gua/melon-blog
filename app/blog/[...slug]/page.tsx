@@ -248,14 +248,14 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }, option
 }
 
 export default async function Blog({params}: { params: { slug: string[] } }) {
-    let domList = <></>
-    try {
-        domList = await renderNotionPage({params}, {checkExpired: true})
-    } catch (error) {
-        console.log(error)
-        domList = await renderNotionPage({params}, {checkExpired: false})
-    }
-
-    return domList
-
+    // let domList = <></>
+    // try {
+    //     domList = await renderNotionPage({params}, {checkExpired: true})
+    // } catch (error) {
+    //     console.log(error)
+    //     domList = await renderNotionPage({params}, {checkExpired: false})
+    // }
+    //
+    // return domList
+    return await renderNotionPage({params}, {checkExpired: true})
 }
