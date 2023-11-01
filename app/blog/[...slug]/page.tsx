@@ -4,7 +4,12 @@ import {Block, RichText} from "@/types/type";
 import Link from "next/link";
 import 'highlight.js/styles/github-dark.css';
 import hljs from 'highlight.js';
-import Image from "next/image";
+
+type RenderOptions = {
+    checkExpired?: boolean
+}
+
+type renderFunc = (block: Block, option?: RenderOptions) => any
 
 const renderParagraph = async (block: Block) => {
     if (!block || !block[block.type].rich_text) {
@@ -98,8 +103,8 @@ const renderCode = async (block: Block) => {
     return <div key={block.id} className="w-full mockup-code mb-5 text-[0.9em] font-mono">{hlDom}</div>
 }
 
-const renderImage = async (block: Block) => {
-    if (new Date(block.image.file.expiry_time).getTime() <= new Date().getTime()) {
+const renderImage = async (block: Block, options?: RenderOptions) => {
+    if (options && options.checkExpired && new Date(block.image.file.expiry_time).getTime() <= new Date().getTime()) {
         throw new Error('image expired');
     }
     let width = 'w-auto'
@@ -148,7 +153,8 @@ const renderTableRow = async (block: Block) => {
     const domList: any = []
     let index = 0
     for (const cell of cells) {
-        domList.push(<td key={index} className="border border-gray-300 px-4 py-2">{await renderRichText(cell, block)}</td>)
+        domList.push(<td key={index}
+                         className="border border-gray-300 px-4 py-2">{await renderRichText(cell, block)}</td>)
         index++
     }
     return <tr key={block.id}>{domList}</tr>
@@ -174,7 +180,7 @@ const renderColumn = async (block: Block) => {
     return <div key={block.id} className="w-max h-auto">{domList}</div>
 }
 
-const renderer: any = {
+const renderer: { [key: string]: renderFunc } = {
     'heading_1': renderParagraph,
     'heading_2': renderParagraph,
     'heading_3': renderParagraph,
@@ -191,7 +197,7 @@ const renderer: any = {
     'text': renderParagraph,
 }
 
-const renderNotionPage = async ({params}: { params: { slug: string[] } }) => {
+const renderNotionPage = async ({params}: { params: { slug: string[] } }, options: RenderOptions) => {
     const res = await listPageBlock(params.slug[0])
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
@@ -244,14 +250,10 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }) => {
 export default async function Blog({params}: { params: { slug: string[] } }) {
     let domList = <></>
     try {
-        domList = await renderNotionPage({params})
+        domList = await renderNotionPage({params}, {checkExpired: true})
     } catch (error) {
         console.log(error)
-        try {
-            domList = await renderNotionPage({params})
-        } catch (error) {
-            console.log(error)
-        }
+        domList = await renderNotionPage({params}, {checkExpired: false})
     }
 
     return domList
