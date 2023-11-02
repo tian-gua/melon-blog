@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {RenderOptions} from "@/types/type";
 
 export async function getDatabaseData() {
     if (process.env.APP_ENV === 'dev') {
@@ -31,7 +32,7 @@ export async function getDatabaseData() {
     return res.json()
 }
 
-export async function listPageBlock(id: string) {
+export async function listPageBlock(id: string, options?: RenderOptions) {
     if (process.env.APP_ENV === 'dev') {
         return axios.get(`https://api.notion.com/v1/blocks/${id}/children`, {
             proxy: {
@@ -47,9 +48,10 @@ export async function listPageBlock(id: string) {
     }
 
     const res = await fetch(`https://api.notion.com/v1/blocks/${id}/children`, {
-        next: {
+        next: options && options.cache === 'default' ? {
             revalidate: 60
-        },
+        } : undefined,
+        cache: options && options.cache !== 'default' ? options.cache as RequestCache : undefined,
         method: 'GET',
         headers: {
             'Authorization': process.env.NOTION_AUTH as string,

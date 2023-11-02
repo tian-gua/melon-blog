@@ -158,3 +158,11 @@ export type ColumnList = {
 export type Column = {
 
 }
+
+
+export type RenderOptions = {
+    checkExpired?: boolean
+    cache: string
+}
+
+export type RenderFunc = (block: Block, option?: RenderOptions) => any

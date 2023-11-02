@@ -1,15 +1,9 @@
 import React from "react"
 import {listPageBlock} from "@/api/notion";
-import {Block, RichText} from "@/types/type";
+import {Block, RichText, RenderOptions, RenderFunc} from "@/types/type";
 import Link from "next/link";
 import 'highlight.js/styles/github-dark.css';
 import hljs from 'highlight.js';
-
-type RenderOptions = {
-    checkExpired?: boolean
-}
-
-type renderFunc = (block: Block, option?: RenderOptions) => any
 
 const renderParagraph = async (block: Block) => {
     if (!block || !block[block.type].rich_text) {
@@ -182,7 +176,7 @@ const renderColumn = async (block: Block) => {
     return <div key={block.id} className="w-max h-auto">{domList}</div>
 }
 
-const renderer: { [key: string]: renderFunc } = {
+const renderer: { [key: string]: RenderFunc } = {
     'heading_1': renderParagraph,
     'heading_2': renderParagraph,
     'heading_3': renderParagraph,
@@ -200,7 +194,7 @@ const renderer: { [key: string]: renderFunc } = {
 }
 
 const renderNotionPage = async ({params}: { params: { slug: string[] } }, options: RenderOptions) => {
-    const res = await listPageBlock(params.slug[0])
+    const res = await listPageBlock(params.slug[0], options)
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
 
@@ -252,10 +246,10 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }, option
 export default async function Blog({params}: { params: { slug: string[] } }) {
     let domList = <></>
     try {
-        domList = await renderNotionPage({params}, {checkExpired: true})
+        domList = await renderNotionPage({params}, {checkExpired: true, cache: 'default'})
     } catch (error) {
         console.log(error)
-        domList = await renderNotionPage({params}, {checkExpired: false})
+        domList = await renderNotionPage({params}, {checkExpired: false, cache: 'no-cache',})
     }
 
     return domList
