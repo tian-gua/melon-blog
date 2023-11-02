@@ -104,6 +104,7 @@ const renderCode = async (block: Block) => {
 }
 
 const renderImage = async (block: Block, options?: RenderOptions) => {
+    console.log(block, options)
     const now = new Date();
     if (options && options.checkExpired && new Date(block.image.file.expiry_time).getTime() <= now.getTime()) {
         throw new Error('image expired');
