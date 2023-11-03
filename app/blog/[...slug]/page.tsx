@@ -112,6 +112,12 @@ const renderImage = async (block: Block, options?: RenderOptions) => {
         } else if (block.image.caption[0].plain_text.includes('[400x400]')) {
             width = `w-[400px]`
             height = `h-[400px]`
+        } else if (block.image.caption[0].plain_text.includes('[400x600]')) {
+            width = `w-[400px]`
+            height = `h-[600px]`
+        } else if (block.image.caption[0].plain_text.includes('[400x800]')) {
+            width = `w-[400px]`
+            height = `h-[800px]`
         } else if (block.image.caption[0].plain_text.includes('[800x800]')) {
             width = `w-[800px]`
             height = `h-[800px]`
