@@ -219,11 +219,11 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }, option
                 continue
             }
             if (tmp_list_disc.length !== 0) {
-                domList.push(<ul className="list-disc list-inside">{tmp_list_disc}</ul>)
+                domList.push(<ul className="list-disc list-inside mb-4 text-[0.9em] text-gray-700">{tmp_list_disc}</ul>)
                 tmp_list_disc = []
             }
             if (tmp_list_decimal.length !== 0) {
-                domList.push(<ol className="list-decimal list-inside">{tmp_list_decimal}</ol>)
+                domList.push(<ol className="list-decimal list-inside mb-4 text-[0.9em] text-gray-700">{tmp_list_decimal}</ol>)
                 tmp_list_decimal = []
             }
             if (rendererFunc) {
@@ -233,10 +233,10 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }, option
             }
         }
         if (tmp_list_disc.length !== 0) {
-            domList.push(<ul className="list-disc list-inside mt-5">{tmp_list_disc}</ul>)
+            domList.push(<ul className="list-disc list-inside mb-4">{tmp_list_disc}</ul>)
         }
         if (tmp_list_decimal.length !== 0) {
-            domList.push(<ol className="list-decimal list-inside mt-5">{tmp_list_decimal}</ol>)
+            domList.push(<ol className="list-decimal list-inside mb-4">{tmp_list_decimal}</ol>)
         }
     }
 
