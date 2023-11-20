@@ -37,7 +37,7 @@ const renderRichText = async (richTexts: RichText[], block: Block) => {
             className += " underline"
         }
         if (richText.annotations.code) {
-            className += " bg-gray-600 p-1 rounded-md text-slate-100 text-[0.8em] font-bold"
+            className += " bg-gray-700 py-[1px] px-[4px] rounded text-[0.9em] text-white"
         }
         if (richText.text.link && richText.text.link.url) {
             className += " hover:underline cursor-pointer text-blue-700"
@@ -60,17 +60,32 @@ const renderRichText = async (richTexts: RichText[], block: Block) => {
 }
 
 const renderQuote = async (block: Block) => {
-    if (block.paragraph.rich_text.length === 0) {
+    // console.log(`quote: ${JSON.stringify(block)}`)
+    if (block.quote.rich_text.length === 0) {
         return <></>
     }
+
     const richTextDom = []
     let index = 0
-    for (const richText of block.paragraph.rich_text) {
-        richTextDom.push(<span key={index}>{richText.plain_text}</span>)
+    for (const richText of block.quote.rich_text) {
+        richTextDom.push(<span className="inline-block" key={index}>{richText.plain_text}</span>)
         index++
     }
-    return <blockquote className="p-4 my-4 border-l-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
-        <p className="text-xl italic font-medium leading-relaxed text-gray-900 dark:text-white">{richTextDom}</p>
+
+    if (block.has_children) {
+        const res = await listPageBlock(block.id);
+        const subBlocks: Block[] = res.data ? res.data.results : res.results
+        console.log(`sub quotes: ${JSON.stringify(subBlocks)}`)
+        for (const subBlock of subBlocks) {
+            for (const richText of subBlock.paragraph.rich_text) {
+                richTextDom.push(<span className="inline-block" key={index}>{richText.plain_text}</span>)
+                index++
+            }
+        }
+    }
+
+    return <blockquote className="p-4 my-4 border-l-4 border-gray-700 bg-gray-200 dark:border-gray-500 dark:bg-gray-800">
+        <p className="text-[0.9em] leading-relaxed text-gray-900 dark:text-white">{richTextDom}</p>
     </blockquote>
 }
 
@@ -98,7 +113,7 @@ const renderCode = async (block: Block) => {
 }
 
 const renderImage = async (block: Block, options?: RenderOptions) => {
-    console.log(block, options)
+    // console.log(block, options)
     const now = new Date();
     if (options && options.checkExpired && new Date(block.image.file.expiry_time).getTime() <= now.getTime()) {
         throw new Error('image expired');
@@ -205,6 +220,8 @@ const renderer: { [key: string]: RenderFunc } = {
 const renderNotionPage = async ({params}: { params: { slug: string[] } }, options: RenderOptions) => {
     const res = await listPageBlock(params.slug[0], options)
     const blocks: Block[] = res.data ? res.data.results : res.results
+    console.log(`blocks: ${params.slug[0]}`)
+
     const domList: any = []
 
     let tmp_list_disc: any = []
