@@ -115,6 +115,9 @@ const renderImage = async (block: Block, options?: RenderOptions) => {
         } else if (block.image.caption[0].plain_text.includes('[400x600]')) {
             width = `w-[400px]`
             height = `h-[600px]`
+        } else if (block.image.caption[0].plain_text.includes('[600x400]')) {
+            width = `w-[600px]`
+            height = `h-[400px]`
         } else if (block.image.caption[0].plain_text.includes('[400x800]')) {
             width = `w-[400px]`
             height = `h-[800px]`
@@ -223,7 +226,8 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }, option
                 tmp_list_disc = []
             }
             if (tmp_list_decimal.length !== 0) {
-                domList.push(<ol className="list-decimal list-inside mb-4 text-[0.9em] text-gray-700">{tmp_list_decimal}</ol>)
+                domList.push(<ol
+                    className="list-decimal list-inside mb-4 text-[0.9em] text-gray-700">{tmp_list_decimal}</ol>)
                 tmp_list_decimal = []
             }
             if (rendererFunc) {
