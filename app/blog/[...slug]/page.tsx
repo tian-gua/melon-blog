@@ -23,6 +23,7 @@ const renderRichText = async (richTexts: RichText[], block: Block) => {
     const richTextDom = []
     let index = 0
     for (const richText of richTexts) {
+        const style: { [key: string]: string } = {}
         let className = "w-full"
         if (richText.annotations.bold) {
             className += " font-bold"
@@ -35,6 +36,9 @@ const renderRichText = async (richTexts: RichText[], block: Block) => {
         }
         if (richText.annotations.underline) {
             className += " underline"
+        }
+        if (richText.annotations.color !== 'default') {
+            style.color = richText.annotations.color
         }
         if (richText.annotations.code) {
             className += " bg-gray-700 py-[1px] px-[4px] rounded text-[0.9em] text-white"
@@ -52,7 +56,7 @@ const renderRichText = async (richTexts: RichText[], block: Block) => {
                 className += " text-[1.1em] font-bold block mt-5 mb-2"
             }
 
-            richTextDom.push(<span key={index} className={className}>{richText.plain_text}</span>)
+            richTextDom.push(<span key={index} className={className} style={style}>{richText.plain_text}</span>)
             index++
         }
     }
@@ -84,7 +88,8 @@ const renderQuote = async (block: Block) => {
         }
     }
 
-    return <blockquote className="p-4 my-4 border-l-4 border-gray-700 bg-gray-200 dark:border-gray-500 dark:bg-gray-800">
+    return <blockquote
+        className="p-4 my-4 border-l-4 border-gray-700 bg-gray-200 dark:border-gray-500 dark:bg-gray-800">
         <p className="text-[0.9em] leading-relaxed text-gray-900 dark:text-white">{richTextDom}</p>
     </blockquote>
 }
@@ -118,34 +123,15 @@ const renderImage = async (block: Block, options?: RenderOptions) => {
     if (options && options.checkExpired && new Date(block.image.file.expiry_time).getTime() <= now.getTime()) {
         throw new Error('image expired');
     }
-    let width = 'w-auto'
-    let height = 'h-auto'
+    const style: { [key: string]: string } = {}
     if (block.image.caption.length > 0) {
-        if (block.image.caption[0].plain_text.includes('[200x200]')) {
-            width = `w-[200px]`
-            height = `h-[200px]`
-        } else if (block.image.caption[0].plain_text.includes('[400x400]')) {
-            width = `w-[400px]`
-            height = `h-[400px]`
-        } else if (block.image.caption[0].plain_text.includes('[400x600]')) {
-            width = `w-[400px]`
-            height = `h-[600px]`
-        } else if (block.image.caption[0].plain_text.includes('[600x400]')) {
-            width = `w-[600px]`
-            height = `h-[400px]`
-        } else if (block.image.caption[0].plain_text.includes('[400x800]')) {
-            width = `w-[400px]`
-            height = `h-[800px]`
-        } else if (block.image.caption[0].plain_text.includes('[800x800]')) {
-            width = `w-[800px]`
-            height = `h-[800px]`
-        } else if (block.image.caption[0].plain_text.includes('[800x600]')) {
-            width = `w-[800px]`
-            height = `h-[600px]`
+        if (block.image.caption[0].plain_text.includes('[') && block.image.caption[0].plain_text.includes(']') && block.image.caption[0].plain_text.includes('x')) {
+            style.width = block.image.caption[0].plain_text.split('[')[1].split(']')[0].split('x')[0] + 'px'
+            style.height = block.image.caption[0].plain_text.split('[')[1].split(']')[0].split('x')[1] + 'px'
         }
     }
-    const style = `mt-5 mb-5 rounded-lg ${width} ${height} max-w-full shadow-lg shadow-gray-300 border border-gray-200`
-    return <img key={block.id} src={block.image.file.url} className={style} alt="image"/>
+    const className = `mt-5 mb-5 rounded-lg max-w-full shadow-gray-300 shadow-[rgba(14,30,37,0.12)_0px_2px_4px_0px,rgba(14,30,37,0.32)_0px_2px_16px_0px]`
+    return <img width={style.width} height={style.height} key={block.id} src={block.image.file.url} className={className} alt="image"/>
 }
 
 const renderTable = async (block: Block) => {
