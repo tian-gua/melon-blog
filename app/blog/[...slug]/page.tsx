@@ -41,7 +41,7 @@ const renderRichText = async (richTexts: RichText[], block: Block) => {
             style.color = richText.annotations.color
         }
         if (richText.annotations.code) {
-            className += " bg-gray-700 py-[1px] px-[4px] rounded text-[0.9em] text-white"
+            className += " bg-[#e1e2e6] border border-[#c4c8d1] py-[2px] px-1 rounded text-[0.9em] text-black"
         }
         if (richText.text.link && richText.text.link.url) {
             className += " hover:underline cursor-pointer text-blue-700"
