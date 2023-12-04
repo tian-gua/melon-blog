@@ -53,9 +53,9 @@ export default async function Home() {
         const domList: React.JSX.Element[] = []
         for (const blog of blogs) {
             domList.push(
-                <div className="w-full h-10 px-3 flex justify-start items-center hover:bg-gray-100 rounded-md">
-                    <a className="" href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
-                    <span className="text-gray-400 grow flex justify-end">{blog.date}</span>
+                <div className="w-full h-10 px-3 flex justify-between items-center hover:bg-gray-100 rounded-md">
+                    <a className="flex-1" href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
+                    <span className="text-gray-400">{blog.date}</span>
                 </div>
             )
         }
@@ -101,10 +101,10 @@ export default async function Home() {
                     <span>Hello</span>
                     <span>I&lsquo;m Melon</span>
                 </h1>
-                <div className="mt-2 text-gray-600 text-base antialiased">
-                    <p>🧑‍💻 全栈开发者 / Full-stack Developer</p>
-                    <p>🤩 正在做一些有趣的事 / Working on something interesting</p>
-                    <p>🥰 <Link href="http://blog.tiangua.info">blog.tiangua.info</Link></p>
+                <div className="mt-2 text-gray-600 antialiased text-[0.9em]">
+                    <p className="flex flex-wrap py-1"><span>🧑‍💻&nbsp;全栈开发者&nbsp;/&nbsp;</span><span>Full-stack Developer</span></p>
+                    <p className="flex flex-wrap py-1">🤩&nbsp;正在做一些有趣的事 / Working on something interesting</p>
+                    <p className="flex flex-wrap py-1">🥰&nbsp;<Link href="http://blog.tiangua.info">blog.tiangua.info</Link></p>
                 </div>
             </div>
             {/*图标跳转区域*/}

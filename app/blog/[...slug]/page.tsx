@@ -114,9 +114,10 @@ const renderCode = async (block: Block) => {
     const hlCode = hljs.highlight(code, {language: language}).value
     let i = 0
     hlCode.split('\n').forEach((line) => {
-        hlDom.push(<pre key={i}><code dangerouslySetInnerHTML={{__html: line}}/></pre>)
+        hlDom.push(<pre key={i}><code className="" dangerouslySetInnerHTML={{__html: line}}/></pre>)
         i++
     })
+
     return <div key={block.id} className="w-full mockup-code mb-5 text-[0.9em] font-mono">{hlDom}</div>
 }
 

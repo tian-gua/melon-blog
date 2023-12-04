@@ -29,7 +29,7 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
         <body className={inter.className}>
         <div className="h-full w-full flex justify-center font-mono bg-white">
             <div
-                className="max-w-[1024px] h-full pt-10 px-10 border-gray-500 flex justify-between flex-wrap box-border">
+                className="w-full max-w-[1024px] h-full pt-10 px-10 border-gray-500 flex justify-between flex-wrap box-border">
                 {/*头像*/}
                 <Link className="w-24 mask mask-hexagon" href="/blog/c17e78bf-961b-4af5-aada-252ef6af0093/关于我">
                     <img className="h-full w-full rounded-full"
