@@ -69,17 +69,20 @@ const renderQuote = async (block: Block) => {
         return <></>
     }
 
-    const richTextDom = []
-    let index = 0
-    for (const richText of block.quote.rich_text) {
-        richTextDom.push(<span className="inline-block" key={index}>{richText.plain_text}</span>)
-        index++
-    }
+    // const richTextDom = []
+    // let index = 0
+    // for (const richText of block.quote.rich_text) {
+    //     richTextDom.push(<span className="inline-block" key={index}>{richText.plain_text}</span>)
+    //     index++
+    // }
+
+    const richTextDom = await renderRichText(block.quote.rich_text, block)
 
     if (block.has_children) {
         const res = await listPageBlock(block.id);
         const subBlocks: Block[] = res.data ? res.data.results : res.results
         console.log(`sub quotes: ${JSON.stringify(subBlocks)}`)
+        let index = 0;
         for (const subBlock of subBlocks) {
             for (const richText of subBlock.paragraph.rich_text) {
                 richTextDom.push(<span className="inline-block" key={index}>{richText.plain_text}</span>)
@@ -247,7 +250,7 @@ const renderNotionPage = async ({params}: { params: { slug: string[] } }, option
         }
     }
 
-    return <div className="font-mono mb-20">
+    return <div className="font-mono mb-10">
         <h1 className="w-full mx-auto text-center text-[1.8em]">{decodeURIComponent(params.slug[1])}</h1>
         <div className="divider"></div>
         <div className="text-base antialiased">

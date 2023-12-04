@@ -53,9 +53,9 @@ export default async function Home() {
         const domList: React.JSX.Element[] = []
         for (const blog of blogs) {
             domList.push(
-                <div className="w-full h-10 px-3 flex justify-end items-center hover:bg-gray-100 rounded-md">
-                    <a className="grow" href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
-                    <span className="text-gray-400">{blog.date}</span>
+                <div className="w-full h-10 px-3 flex justify-start items-center hover:bg-gray-100 rounded-md">
+                    <a className="" href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
+                    <span className="text-gray-400 grow flex justify-end">{blog.date}</span>
                 </div>
             )
         }

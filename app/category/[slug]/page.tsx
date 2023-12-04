@@ -54,7 +54,7 @@ export default async function ArticleList({params}: { params: { slug: string } }
             </div>)
     }
 
-    return <div>
+    return <div className="text-base antialiased">
         <h1 className="w-full h-full px-3 font-extrabold text-[1.5em]">
             {decodeURIComponent(params.slug)}
         </h1>
