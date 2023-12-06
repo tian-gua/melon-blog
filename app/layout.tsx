@@ -16,14 +16,14 @@ export const metadata: Metadata = {
 export default function RootLayout({children,}: { children: React.ReactNode }) {
     return (
         <html>
-        <Script async strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-7QMKKDBWPC"/>
+        <Script async strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-YS74P2SD7M"/>
         <Script id="google-analytics" strategy="afterInteractive" dangerouslySetInnerHTML={{
             __html: `
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
                 
-                  gtag('config', 'G-7QMKKDBWPC');
+                  gtag('config', 'G-YS74P2SD7M');
                   `
         }}/>
         <Script id="baidu-analytics" strategy="afterInteractive" dangerouslySetInnerHTML={{
