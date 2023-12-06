@@ -104,7 +104,7 @@ export default async function Home() {
                 <div className="mt-2 text-gray-600 antialiased text-[0.9em]">
                     <p className="flex flex-wrap py-1"><span>🧑‍💻&nbsp;全栈开发者&nbsp;/&nbsp;</span><span>Full-stack Developer</span></p>
                     <p className="flex flex-wrap py-1">🤩&nbsp;正在做一些有趣的事 / Working on something interesting</p>
-                    <p className="flex flex-wrap py-1">🥰&nbsp;<Link href="http://blog.tiangua.info">blog.tiangua.info</Link></p>
+                    <p className="flex flex-wrap py-1">🥰&nbsp;<Link href="http://www.tiangua.info">www.tiangua.info</Link></p>
                 </div>
             </div>
             {/*图标跳转区域*/}

@@ -26,6 +26,17 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
                   gtag('config', 'G-7QMKKDBWPC');
                   `
         }}/>
+        <Script id="baidu-analytics" strategy="afterInteractive" dangerouslySetInnerHTML={{
+            __html: `
+                   var _hmt = _hmt || [];
+                    (function() {
+                      var hm = document.createElement("script");
+                      hm.src = "https://hm.baidu.com/hm.js?05eddadd4dd8d3f7c8a3bcdf563b1b6e";
+                      var s = document.getElementsByTagName("script")[0]; 
+                      s.parentNode.insertBefore(hm, s);
+                    })();
+                  `
+        }}/>
         <body className={inter.className}>
         <div className="h-full w-full flex justify-center font-mono bg-white">
             <div
