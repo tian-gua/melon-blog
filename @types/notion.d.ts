@@ -1,4 +1,4 @@
-export type NotionData = {
+declare type NotionData = {
     object: string,
     id: string,
     created_time: string,
@@ -12,7 +12,7 @@ export type NotionData = {
     public_url: string
 }
 
-export type Properties = {
+declare type Properties = {
     Date: {
         id: string,
         type: string,
@@ -66,7 +66,7 @@ export type Properties = {
     Status: any
 }
 
-export type Blog = {
+declare type Blog = {
     id: string
     title: string
     date: string
@@ -76,7 +76,7 @@ export type Blog = {
     Status: string
 }
 
-export type RichText = {
+declare type RichText = {
     type: string,
     text: {
         content: string
@@ -97,7 +97,7 @@ export type RichText = {
     [key: string]: any
 }
 
-export type Block = {
+declare type Block = {
     object: string,
     id: string,
     created_time: string,
@@ -121,13 +121,13 @@ export type Block = {
 }
 
 
-export type Code = {
+declare type Code = {
     caption: [],
     language: string,
     rich_text: RichText[],
 }
 
-export type Image = {
+declare type Image = {
     caption: any[],
     type: string,
     file: {
@@ -136,33 +136,29 @@ export type Image = {
     }
 }
 
-export type Paragraph = {
+declare type Paragraph = {
     rich_text: RichText[],
     color: string,
 }
 
-export type Table = {
+declare type Table = {
     table_width: number,
     has_row_header: boolean,
     has_column_header: boolean,
 }
 
-export type TableRow = {
+declare type TableRow = {
     cells: RichText[][]
 }
 
-export type ColumnList = {
+declare type ColumnList = {}
 
-}
-
-export type Column = {
-
-}
+declare type Column = {}
 
 
-export type RenderOptions = {
+declare type RenderOptions = {
     checkExpired?: boolean
     cache: string
 }
 
-export type RenderFunc = (block: Block, option?: RenderOptions) => any
+declare type RenderFunc = (block: Block, option?: RenderOptions) => any

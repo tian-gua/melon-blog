@@ -1,12 +1,13 @@
 import React from "react";
-import {NotionData, Blog} from "@/types/type";
-import {getDatabaseData} from "@/api/notion";
-import Link from "next/link";
 import Description from "@/components/description";
 import Contact from "@/components/contact";
+import notionService from "@/server/service/notion-service";
+import BrowserUtils from "@/server/utils/browser-utils";
+import Tags from "@/components/tags";
 
 export default async function Home() {
-    const database = await getDatabaseData()
+
+    const database = await notionService.getDatabase();
     let aboutMe = ''
     const blogGroup = new Map<string, Blog[]>()
     const results: NotionData[] = database.data ? database.data.results : database.results
@@ -56,7 +57,10 @@ export default async function Home() {
         for (const blog of blogs) {
             domList.push(
                 <div className="w-full h-10 px-3 flex justify-between items-center hover:bg-gray-100 rounded-md">
-                    <a className="flex-1" href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
+                    <div className="flex-1">
+                        <a href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
+                        <Tags/>
+                    </div>
                     <span className="text-gray-400">{blog.date}</span>
                 </div>
             )

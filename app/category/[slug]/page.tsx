@@ -1,11 +1,10 @@
-import {getDatabaseData} from "@/api/notion";
-import {NotionData} from "@/types/type";
 import React from "react";
+import notionService from "@/server/service/notion-service";
 
 export default async function ArticleList({params}: { params: { slug: string } }) {
     const domList = []
 
-    const database = await getDatabaseData()
+    const database = await notionService.getDatabase()
     const results: NotionData[] = database.data ? database.data.results : database.results
 
     const categoryArticles = []
@@ -55,7 +54,7 @@ export default async function ArticleList({params}: { params: { slug: string } }
     }
 
     return <div className="text-base antialiased">
-        <h1 className="w-full h-full px-3 font-extrabold text-[1.5em]">
+        <h1 className="w-full h-full px-3 font-extrabold text-[1.5em] mb-5">
             {decodeURIComponent(params.slug)}
         </h1>
         {

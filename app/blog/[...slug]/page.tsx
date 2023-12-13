@@ -1,9 +1,8 @@
 import React from "react"
-import {listPageBlock} from "@/api/notion";
-import {Block, RichText, RenderOptions, RenderFunc} from "@/types/type";
 import Link from "next/link";
 import 'highlight.js/styles/github-dark.css';
 import hljs from 'highlight.js';
+import notionService from "@/server/service/notion-service";
 
 const renderParagraph = async (block: Block) => {
     if (!block || !block[block.type].rich_text) {
@@ -79,7 +78,7 @@ const renderQuote = async (block: Block) => {
     const richTextDom = await renderRichText(block.quote.rich_text, block)
 
     if (block.has_children) {
-        const res = await listPageBlock(block.id);
+        const res = await notionService.listPageBlock(block.id);
         const subBlocks: Block[] = res.data ? res.data.results : res.results
         console.log(`sub quotes: ${JSON.stringify(subBlocks)}`)
         let index = 0;
@@ -142,7 +141,7 @@ const renderTable = async (block: Block) => {
     if (!block || !block.has_children) {
         return <></>
     }
-    const res = await listPageBlock(block.id);
+    const res = await notionService.listPageBlock(block.id);
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
     for (const block of blocks) {
@@ -171,7 +170,7 @@ const renderTableRow = async (block: Block) => {
 }
 
 const renderColumnList = async (block: Block) => {
-    const res = await listPageBlock(block.id)
+    const res = await notionService.listPageBlock(block.id)
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
     for (const block of blocks) {
@@ -181,7 +180,7 @@ const renderColumnList = async (block: Block) => {
 }
 
 const renderColumn = async (block: Block) => {
-    const res = await listPageBlock(block.id)
+    const res = await notionService.listPageBlock(block.id)
     const blocks: Block[] = res.data ? res.data.results : res.results
     const domList: any = []
     for (const block of blocks) {
@@ -208,7 +207,7 @@ const renderer: { [key: string]: RenderFunc } = {
 }
 
 const renderNotionPage = async ({params}: { params: { slug: string[] } }, options: RenderOptions) => {
-    const res = await listPageBlock(params.slug[0], options)
+    const res = await notionService.listPageBlock(params.slug[0], options)
     const blocks: Block[] = res.data ? res.data.results : res.results
     console.log(`blocks: ${params.slug[0]}`)
 
