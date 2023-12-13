@@ -7,17 +7,18 @@ import {TypeAnimation} from "react-type-animation";
 const Description = () => {
     return <>
         <div className="w-full h-max px-3">
-            <h1 className="flex flex-col text-3xl font-bold leading-normal">
-                <span>Hello</span>
+            <h1 className="flex flex-col text-xl leading-normal font-serif">
+                {/*<span className="">Hello, this is melon&lsquo;s blog</span>*/}
                 <TypeAnimation
+                    className="text-[#a2a2a2]"
                     sequence={[
                         // Same substring at the start will only be typed out once, initially
-                        'I am Melon',
-                        1000, // wait 1s before replacing "Mice" with "Hamsters"
-                        'I am a Full-stack Developer',
-                        1000,
-                        'I am doing something interesting',
-                        1000,
+                        `您好,我是Melon / Hello, I am Melon, this is Melon's blog`,
+                        5000, // wait 1s before replacing "Mice" with "Hamsters"
+                        '我有一个研发小工作室,并且可以为您提供服务',
+                        5000,
+                        '我们可以开发网站、小程序、APP等等项目,若果您有需求可以联系我哦',
+                        5000,
                     ]}
                     wrapper="span"
                     speed={50}
