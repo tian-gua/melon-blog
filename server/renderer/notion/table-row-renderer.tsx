@@ -10,15 +10,7 @@ class TableRowRenderer extends BaseRenderer implements Renderer {
         }
         const cells = block.table_row.cells
         return <tr key={block.id}>{cells.map((cell: RichText[], index: number) => {
-            return <td key={index} className="border border-gray-300 px-4 py-2">{cell.map((richText, richTextIndex) => {
-                if (richText.text.link && richText.text.link && richText.text.link.url) {
-                    return <Link key={index} className={"hover:underline cursor-pointer text-blue-700"}
-                                 href={richText.text.link.url}>{richText.plain_text}</Link>
-                }
-
-                const style = this.processAnnotation(richText.annotations)
-                return <span key={richTextIndex} style={style}>{richText.plain_text}</span>
-            })}</td>
+            return <td key={index} className="border border-gray-300 px-4 py-2">{this.renderRichText(cell)}</td>
         })}</tr>
     }
 }

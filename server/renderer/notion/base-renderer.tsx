@@ -1,6 +1,18 @@
-class BaseRenderer {
+import Link from "next/link";
 
-    processAnnotation(annotations: any) {
+class BaseRenderer {
+    protected renderRichText(richTexts: RichText[]) {
+        return richTexts.map((richText, index) => {
+            if (richText.text.link && richText.text.link && richText.text.link.url) {
+                return <Link key={index} className={"hover:underline cursor-pointer text-blue-700"}
+                             href={richText.text.link.url}>{richText.plain_text}</Link>
+            }
+            const style = this.processAnnotation(richText.annotations)
+            return <span key={index} className={"mb-2"} style={style}>{richText.plain_text}</span>
+        })
+    }
+
+    protected processAnnotation(annotations: any) {
         const style: any = {}
         if (annotations.bold) {
             style.fontWeight = "bold"
