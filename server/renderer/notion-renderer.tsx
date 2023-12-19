@@ -40,7 +40,7 @@ export class NotionRenderer {
 
     async fetchBlocks(id: string) {
         if (!this.blockMap.has(id)) {
-            const res = await notionService.listPageBlock(id)
+            const res = await notionService.listPageBlock(id, {cache: "reload"})
             this.blockMap.set(id, res.data ? res.data.results : res.results)
         }
 

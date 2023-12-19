@@ -160,5 +160,3 @@ declare type RenderOptions = {
     checkExpired?: boolean
     cache: string
 }
-
-declare type RenderFunc = (block: Block, option?: RenderOptions) => any
