@@ -13,12 +13,10 @@ const Description = () => {
                     className="text-[#a2a2a2]"
                     sequence={[
                         // Same substring at the start will only be typed out once, initially
-                        `您好,我是Melon / Hello, I am Melon, this is Melon's blog`,
-                        5000, // wait 1s before replacing "Mice" with "Hamsters"
-                        '我有一个研发小工作室,并且可以为您提供服务',
-                        5000,
-                        '我们可以开发网站、小程序、APP等等项目,若果您有需求可以联系我哦',
-                        5000,
+                        `Hello, I'm Melon, this is Melon's blog`,
+                        2000, // wait 1s before replacing "Mice" with "Hamsters"
+                        "Thank you for visiting my blog",
+                        2000
                     ]}
                     wrapper="span"
                     speed={50}
@@ -29,8 +27,8 @@ const Description = () => {
                 <p className="flex flex-wrap py-1"><span>🧑‍💻&nbsp;全栈开发者&nbsp;/&nbsp;</span><span>Full-stack Developer</span>
                 </p>
                 <p className="flex flex-wrap py-1">🤩&nbsp;正在做一些有趣的事 / Working on something interesting</p>
-                <p className="flex flex-wrap py-1">🥰&nbsp;<Link href="http://www.tiangua.info">www.tiangua.info</Link>
-                </p>
+                <p className="flex flex-wrap py-1">🥰&nbsp;我正在经营一个研发工作室,如果您有项目需要合作,可以联系我</p>
+                <p className="flex flex-wrap py-1">&nbsp;&nbsp; I am running a Programming Studio, if you have a project that needs cooperation, you can contact me</p>
             </div>
         </div>
     </>
