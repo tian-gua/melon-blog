@@ -43,7 +43,7 @@ export class NotionRenderer {
         console.log(JSON.stringify(cacheObject))
         if (!cacheObject || !cacheObject.valid || cacheObject.expiredTime < Date.now()) {
             console.log('reload cache')
-            const res = await notionService.listPageBlock(id, {cache: "reload"})
+            const res = await notionService.listPageBlock(id, {cache: "no-cache"})
             const blocks: Block[] = res.data ? res.data.results : res.results
 
             const imageBLock = blocks.find((block: Block) => block.type === 'image')
