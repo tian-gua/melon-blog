@@ -17,11 +17,11 @@ import BulletedListRenderer from "@/server/renderer/notion/bulleted-list-rendere
 export class NotionRenderer {
 
     private readonly rendererMap: Map<string, Renderer>
-    private blockMap: Map<string, Block[]>
+    private cache: Map<string, CacheObject<Block[]>>
     private delayBlocks: Block[] = []
 
     constructor() {
-        this.blockMap = new Map<string, Block[]>()
+        this.cache = new Map<string, CacheObject<Block[]>>()
         this.rendererMap = new Map<string, Renderer>()
         this.rendererMap.set('heading_1', new H1Renderer())
         this.rendererMap.set('heading_2', new H2Renderer())
@@ -38,26 +38,40 @@ export class NotionRenderer {
         this.rendererMap.set('numbered_list_item', new BulletedListRenderer())
     }
 
-    async fetchBlocks(id: string) {
-        if (!this.blockMap.has(id)) {
+    async getBlockCache(id: string) {
+        const cacheObject = this.cache.get(id)
+        console.log(JSON.stringify(cacheObject))
+        if (!cacheObject || !cacheObject.valid || cacheObject.expiredTime < Date.now()) {
+            console.log('reload cache')
             const res = await notionService.listPageBlock(id, {cache: "reload"})
-            this.blockMap.set(id, res.data ? res.data.results : res.results)
+            const blocks: Block[] = res.data ? res.data.results : res.results
+
+            const imageBLock = blocks.find((block: Block) => block.type === 'image')
+
+            this.cache.set(id, {
+                data: blocks,
+                valid: !imageBLock,
+                expiredTime: Date.now() + 1000 * 60
+            })
+            return blocks
         }
 
-        return this.blockMap.get(id)
+        console.log('use cache')
+        return cacheObject!.data
     }
 
     async render(id: string) {
-        const blocks = await this.fetchBlocks(id)
+        const blocks = await this.getBlockCache(id)
 
         const elements: React.JSX.Element[] = []
         if (blocks) {
-            for (const block of blocks!) {
+            for (const block of blocks) {
                 const renderer = this.rendererMap.get(block.type)
                 if (!renderer) {
                     console.error(`Not found renderer for block type: ${block.type}`)
                     continue;
                 }
+
                 if (renderer.immediate()) {
                     if (this.delayBlocks[0]) {
                         const tmpJsxElements = []

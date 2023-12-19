@@ -160,3 +160,9 @@ declare type RenderOptions = {
     checkExpired?: boolean
     cache: string
 }
+
+declare type CacheObject<T> = {
+    data: T
+    valid: boolean
+    expiredTime: number
+}
