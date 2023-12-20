@@ -1,15 +1,23 @@
 import 'highlight.js/styles/github-dark.css';
 import notionRenderer from "@/server/renderer/notion-renderer";
+import Toc from "@/components/toc";
 
 const Blog = async ({params}: { params: { slug: string[] } }) => {
+    const id = params.slug[0]
+    const title = decodeURIComponent(params.slug[1])
+
+    const {content, toc} = await notionRenderer.render(id, title, true)
+    console.log('toc: ', toc)
     return <>
         <div className="font-mono mb-10">
-            <h1 className="w-full mx-auto text-center text-[1.8em]">{decodeURIComponent(params.slug[1])}</h1>
+            <h1 id={id} className="w-full mx-auto text-center text-[1.8em]">{title}</h1>
             <div className="divider"></div>
             <div className="text-base antialiased">
-                {await notionRenderer.render(params.slug[0])}
+                {content}
+                <Toc id={id} data={toc}/>
             </div>
         </div>
+
     </>
 }
 

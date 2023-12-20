@@ -1,24 +1,29 @@
+/*div:has(.index) {*/
+/*    position: relative;*/
+/*}*/
+
 .index {
     /*overflow: hidden;*/
-    position: absolute;
-    width: 300px;
+    position: fixed;
+    width: auto;
+    padding: 1rem;
     /*height: 40px;*/
-    top: 0;
-    right: -350px;
+    bottom: 10px;
+    right: 10px;
     border-radius: 4px;
     display: flex;
     align-items: start;
     justify-content: start;
     flex-direction: column;
     font-size: x-small;
-    color: #ea4c89;
+
+    text-decoration: underline;
+
+    background-color: #edebff;
+    color: blue;
 }
 
 .index a {
-    display: inline-block;
-    padding: 0 0;
-    border-bottom: 1px solid #e3e3e3;
-    box-sizing: border-box;
     cursor: pointer;
 }
 

@@ -13,12 +13,14 @@ import QuoteRenderer from "@/server/renderer/notion/quote-renderer";
 import ColumnRenderer from "@/server/renderer/notion/column-renderer";
 import ColumnListRenderer from "@/server/renderer/notion/column-list-renderer";
 import BulletedListRenderer from "@/server/renderer/notion/bulleted-list-renderer";
+import Toc from "@/server/renderer/toc";
 
 export class NotionRenderer {
 
     private readonly rendererMap: Map<string, Renderer>
     private cache: Map<string, CacheObject<Block[]>>
     private delayBlocks: Block[] = []
+    private tocMap: Map<string, Toc>
 
     constructor() {
         this.cache = new Map<string, CacheObject<Block[]>>()
@@ -36,21 +38,28 @@ export class NotionRenderer {
         this.rendererMap.set('column_list', new ColumnListRenderer(this))
         this.rendererMap.set('bulleted_list_item', new BulletedListRenderer())
         this.rendererMap.set('numbered_list_item', new BulletedListRenderer())
+        this.tocMap = new Map<string, Toc>()
+    }
+
+    initToc(id: string, name: string) {
+        const toc = new Toc(id, name, 0)
+        this.tocMap.set(id, toc)
     }
 
     async getBlockCache(id: string) {
         const cacheObject = this.cache.get(id)
-        console.log(JSON.stringify(cacheObject))
+        // console.log(JSON.stringify(cacheObject))
         if (!cacheObject || !cacheObject.valid || cacheObject.expiredTime < Date.now()) {
             console.log('reload cache')
             const res = await notionService.listPageBlock(id, {cache: "no-cache"})
             const blocks: Block[] = res.data ? res.data.results : res.results
 
-            const imageBLock = blocks.find((block: Block) => block.type === 'image')
+            // const imageBLock = blocks.find((block: Block) => block.type === 'image')
 
             this.cache.set(id, {
                 data: blocks,
-                valid: !imageBLock,
+                // valid: !imageBLock,
+                valid: true,
                 expiredTime: Date.now() + 1000 * 60
             })
             return blocks
@@ -60,16 +69,33 @@ export class NotionRenderer {
         return cacheObject!.data
     }
 
-    async render(id: string) {
+    async render(id: string, name?: string, root?: boolean): Promise<{
+        content: React.JSX.Element[],
+        toc: Toc
+    } | React.JSX.Element[]> {
         const blocks = await this.getBlockCache(id)
 
         const elements: React.JSX.Element[] = []
         if (blocks) {
+            if (root && name) {
+                this.initToc(id, name)
+            }
+
             for (const block of blocks) {
                 const renderer = this.rendererMap.get(block.type)
                 if (!renderer) {
                     console.error(`Not found renderer for block type: ${block.type}`)
                     continue;
+                }
+
+                if (root) {
+                    if (block.type === 'heading_1') {
+                        this.tocMap.get(id)!.append(block.id, block.heading_1.rich_text[0].plain_text, 1)
+                    } else if (block.type === 'heading_2') {
+                        this.tocMap.get(id)!.append(block.id, block.heading_2.rich_text[0].plain_text, 2)
+                    } else if (block.type === 'heading_3') {
+                        this.tocMap.get(id)!.append(block.id, block.heading_3.rich_text[0].plain_text, 3)
+                    }
                 }
 
                 if (renderer.immediate()) {
@@ -82,10 +108,10 @@ export class NotionRenderer {
 
                         if (this.delayBlocks[0].type === 'bulleted_list_item') {
                             elements.push(<ul
-                                className={"list-disc list-inside mb-4 text-[0.9em] text-gray-700"}>{tmpJsxElements}</ul>)
+                                className={"list-disc list-inside mb-2 text-[0.9em]"}>{tmpJsxElements}</ul>)
                         } else if (this.delayBlocks[0].type === 'numbered_list_item') {
                             elements.push(<ol
-                                className={"list-decimal list-inside mb-4 text-[0.9em] text-gray-700"}>{tmpJsxElements}</ol>)
+                                className={"list-decimal list-inside mb-2 text-[0.9em]"}>{tmpJsxElements}</ol>)
                         }
                         this.delayBlocks = []
                     }
@@ -95,7 +121,10 @@ export class NotionRenderer {
                 }
             }
         }
-        // console.log(elements)
+
+        if (root) {
+            return {content: elements, toc: this.tocMap.get(id)!};
+        }
         return elements
     }
 }

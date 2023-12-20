@@ -5,7 +5,8 @@ class H3Renderer extends BaseRenderer implements Renderer {
     async render(block: Block) {
         const text = block[block.type].rich_text[0].plain_text
         const style = this.processAnnotation(block[block.type].rich_text[0].annotations)
-        return <h3 className={"w-full text-[1.1em] font-bold block mt-4 mb-2"} style={style}>{text}</h3>
+        // style["textShadow"] = "2px 2px 0px #cccccc"
+        return <h3 id={block.id} className={"w-max text-[1.1em] font-bold block mt-2 mb-1"} style={style}>{text}</h3>
     }
 }
 

@@ -8,7 +8,7 @@ class BaseRenderer {
                              href={richText.text.link.url}>{richText.plain_text}</Link>
             }
             const style = this.processAnnotation(richText.annotations)
-            return <span key={index} className={"mb-2"} style={style}>{richText.plain_text}</span>
+            return <span key={index} className={""} style={style}>{richText.plain_text}</span>
         })
     }
 
