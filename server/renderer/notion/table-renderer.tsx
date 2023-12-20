@@ -16,9 +16,11 @@ class TableRenderer extends BaseRenderer implements Renderer {
             return <></>
         }
 
+        const {content} = await this.notionRenderer.render(block.id)
+
         return <div className="overflow-x-auto">
             <table className="table">
-                <tbody>{await this.notionRenderer.render(block.id)}</tbody>
+                <tbody>{content}</tbody>
             </table>
         </div>
     }

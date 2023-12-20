@@ -14,7 +14,7 @@ const Blog = async ({params}: { params: { slug: string[] } }) => {
             <div className="divider"></div>
             <div className="text-base antialiased">
                 {content}
-                <Toc id={id} data={toc}/>
+                <Toc id={id} data={toc!}/>
             </div>
         </div>
 

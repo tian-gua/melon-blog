@@ -12,7 +12,8 @@ class ColumnRenderer extends BaseRenderer implements Renderer {
     }
 
     async render(block: Block) {
-        return <div className="w-full h-auto flex gap-20 mt-10">{await this.notionRenderer.render(block.id)}</div>
+        const {content} = await this.notionRenderer.render(block.id)
+        return <div className="w-full h-auto flex gap-20 mt-10">{content}</div>
     }
 }
 

@@ -71,8 +71,8 @@ export class NotionRenderer {
 
     async render(id: string, name?: string, root?: boolean): Promise<{
         content: React.JSX.Element[],
-        toc: Toc
-    } | React.JSX.Element[]> {
+        toc: Toc | null
+    }> {
         const blocks = await this.getBlockCache(id)
 
         const elements: React.JSX.Element[] = []
@@ -122,10 +122,7 @@ export class NotionRenderer {
             }
         }
 
-        if (root) {
-            return {content: elements, toc: this.tocMap.get(id)!};
-        }
-        return elements
+        return {content: elements, toc: root ? this.tocMap.get(id)! : null};
     }
 }
 
