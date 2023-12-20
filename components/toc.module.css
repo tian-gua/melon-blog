@@ -1,13 +1,7 @@
-/*div:has(.index) {*/
-/*    position: relative;*/
-/*}*/
-
 .index {
-    /*overflow: hidden;*/
     position: fixed;
     width: auto;
     padding: 1rem;
-    /*height: 40px;*/
     bottom: 10px;
     right: 10px;
     border-radius: 4px;

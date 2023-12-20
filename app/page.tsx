@@ -51,7 +51,11 @@ export default async function Home() {
         blogs?.sort((a, b) => {
             return b.date.localeCompare(a.date)
         })
-        blogs = blogs.slice(0, 8)
+        if (category === 'b-编程') {
+            blogs = blogs.slice(0, 16)
+        } else {
+            blogs = blogs.slice(0, 4)
+        }
 
         const domList: React.JSX.Element[] = []
         for (const blog of blogs) {

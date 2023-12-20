@@ -4,7 +4,6 @@ import React from "react";
 import BrowserUtils from "@/server/utils/browser-utils";
 import Styles from "@/components/toc.module.css";
 import TocData from "@/server/renderer/toc";
-import Link from "next/link";
 
 const Toc = (props: { id: string, data: TocData }) => {
     const [hide, setHide] = React.useState<boolean>(true)
@@ -41,15 +40,15 @@ const Toc = (props: { id: string, data: TocData }) => {
         return <div className={Styles.index}>
             <a onClick={() => {
                 scrollToTargetAdjusted(props.data.id)
+                // 使用下面的方法不能实现偏移,例如我想滑到动目标节点的上面30px,这样标题就不会贴着浏览器顶部了
                 // document.getElementById(props.data.id)?.scrollIntoView({behavior: 'smooth', inline: 'start'})
             }}>{props.data.title}</a>
             {props.data.children.map((child) => {
                 return <a key={child.id}
-                             onClick={() => {
-                                 scrollToTargetAdjusted(child.id)
-                                 // document.getElementById(child.id)?.scrollIntoView({behavior: 'smooth', inline: 'start'})
-                             }}
-                             className={child.level == 2 ? Styles.h2 : child.level == 3 ? Styles.h3 : undefined}>{child.title}</a>
+                          onClick={() => {
+                              scrollToTargetAdjusted(child.id)
+                          }}
+                          className={child.level == 2 ? Styles.h2 : child.level == 3 ? Styles.h3 : undefined}>{child.title}</a>
             })}
         </div>
     }
