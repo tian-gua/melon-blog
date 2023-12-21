@@ -23,14 +23,18 @@ const Toc = (props: { id: string, data: TocData }) => {
             }
         })
 
-        window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', (event) => {
             const headerOffset = 30;
-
             props.data.children.forEach((child) => {
-                const elementPosition = document.getElementById(child.id)!.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.scrollY - headerOffset;
-                if (window.scrollY >= offsetPosition) {
-                    setActiveId(child.id)
+                const header = document.getElementById(child.id)!
+                const headerTopPosition = header.getBoundingClientRect().top;
+                // const headerBottomPosition = header.getBoundingClientRect().bottom;
+                const offsetPosition = headerTopPosition + window.scrollY - headerOffset;
+                if (window.scrollY >= offsetPosition && window.scrollY) {
+                    if (activeId !== child.id) {
+                        setActiveId(child.id)
+                    }
+                    return
                 }
             })
         })
@@ -48,11 +52,12 @@ const Toc = (props: { id: string, data: TocData }) => {
             behavior: "smooth"
         });
 
-        setActiveId(id)
+        // setActiveId(id) 让滚动时间自己触发,这样效果会丝滑很多
     }
 
     const render = () => {
         return <div className={`${Styles.index}`}>
+            <h1 className={"text-[20px] mb-5 font-black text-black"}>目录</h1>
             {props.data.children.map((child) => {
                 return <a key={child.id}
                           onClick={() => {
