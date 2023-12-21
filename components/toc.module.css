@@ -1,9 +1,10 @@
 .index {
     position: fixed;
-    width: auto;
+    width: 250px;
+    /*max-width: 250px;*/
     padding: 1rem;
-    bottom: 10px;
-    right: 10px;
+    top: 20%;
+    right: 0;
     border-radius: 4px;
     display: flex;
     align-items: start;
@@ -11,20 +12,36 @@
     flex-direction: column;
     font-size: x-small;
 
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 
-    background-color: #edebff;
+    background-color: #ffffff;
     color: blue;
+
+    border-top: 1px solid #eaeaea;
+    border-left: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
 }
 
 .index a {
     cursor: pointer;
+    /*display: inline-block;*/
+    overflow-x: hidden;
+    white-space:nowrap;
+    width: 100%;
+    text-overflow:ellipsis;
 }
 
 .index .h2 {
-    margin-left: 1.5em;
+    padding-left: 15px;
 }
 
 .index .h3 {
-    margin-left: 3em;
+    padding-left: 30px;
+}
+
+.active {
+    color: #000000;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: underline;
 }

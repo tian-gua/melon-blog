@@ -7,6 +7,7 @@ import TocData from "@/server/renderer/toc";
 
 const Toc = (props: { id: string, data: TocData }) => {
     const [hide, setHide] = React.useState<boolean>(true)
+    const [activeId, setActiveId] = React.useState<string>('')
     React.useEffect(() => {
         if (BrowserUtils.isMobile(navigator.userAgent) || document.body.clientWidth <= 1024) {
             setHide(true)
@@ -21,6 +22,18 @@ const Toc = (props: { id: string, data: TocData }) => {
                 setHide(false)
             }
         })
+
+        window.addEventListener('scroll', () => {
+            const headerOffset = 30;
+
+            props.data.children.forEach((child) => {
+                const elementPosition = document.getElementById(child.id)!.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                if (window.scrollY >= offsetPosition) {
+                    setActiveId(child.id)
+                }
+            })
+        })
     }, [props.id]);
 
 
@@ -34,21 +47,18 @@ const Toc = (props: { id: string, data: TocData }) => {
             top: offsetPosition,
             behavior: "smooth"
         });
+
+        setActiveId(id)
     }
 
     const render = () => {
-        return <div className={Styles.index}>
-            <a onClick={() => {
-                scrollToTargetAdjusted(props.data.id)
-                // 使用下面的方法不能实现偏移,例如我想滑到动目标节点的上面30px,这样标题就不会贴着浏览器顶部了
-                // document.getElementById(props.data.id)?.scrollIntoView({behavior: 'smooth', inline: 'start'})
-            }}>{props.data.title}</a>
+        return <div className={`${Styles.index}`}>
             {props.data.children.map((child) => {
                 return <a key={child.id}
                           onClick={() => {
                               scrollToTargetAdjusted(child.id)
                           }}
-                          className={child.level == 2 ? Styles.h2 : child.level == 3 ? Styles.h3 : undefined}>{child.title}</a>
+                          className={`${child.level == 2 ? Styles.h2 : child.level == 3 ? Styles.h3 : undefined} ${activeId === child.id ? Styles.active : null}`}>{child.title}</a>
             })}
         </div>
     }

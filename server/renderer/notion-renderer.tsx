@@ -43,6 +43,7 @@ export class NotionRenderer {
 
     initToc(id: string, name: string) {
         const toc = new Toc(id, name, 0)
+        toc.append(id, name, 0)
         this.tocMap.set(id, toc)
     }
 
