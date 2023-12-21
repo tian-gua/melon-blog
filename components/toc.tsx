@@ -28,9 +28,11 @@ const Toc = (props: { id: string, data: TocData }) => {
             props.data.children.forEach((child) => {
                 const header = document.getElementById(child.id)!
                 const headerTopPosition = header.getBoundingClientRect().top;
-                // const headerBottomPosition = header.getBoundingClientRect().bottom;
                 const offsetPosition = headerTopPosition + window.scrollY - headerOffset;
-                if (window.scrollY >= offsetPosition && window.scrollY) {
+
+                // console.log(`${child.title} ${offsetPosition} ${window.scrollY} ${window.scrollY - offsetPosition}`)
+
+                if (Math.abs(window.scrollY - offsetPosition) <= 10) {
                     if (activeId !== child.id) {
                         setActiveId(child.id)
                     }
