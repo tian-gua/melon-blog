@@ -39,6 +39,12 @@ const Toc = (props: { id: string, data: TocData }) => {
                     return
                 }
             })
+
+            // check if scroll to bottom
+            const bottom = document.documentElement.scrollHeight - document.documentElement.clientHeight
+            if (window.scrollY >= bottom) {
+                setActiveId(props.data.children[props.data.children.length - 1].id)
+            }
         })
     }, [props.id]);
 
