@@ -1,7 +1,5 @@
 import BaseRenderer from "@/server/renderer/notion/base-renderer";
 import {Renderer} from "@/server/renderer/renderer";
-import {NotionRenderer} from "@/server/renderer/notion-renderer";
-import Link from "next/link";
 
 class TableRowRenderer extends BaseRenderer implements Renderer {
     async render(block: Block) {

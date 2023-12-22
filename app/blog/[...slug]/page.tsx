@@ -1,12 +1,12 @@
 import 'highlight.js/styles/github-dark.css';
-import notionRenderer from "@/server/renderer/notion-renderer";
+import notionArticleRenderer from "@/server/renderer/notion-article-renderer";
 import Toc from "@/components/toc";
 
 const Blog = async ({params}: { params: { slug: string[] } }) => {
     const id = params.slug[0]
     const title = decodeURIComponent(params.slug[1])
 
-    const {content, toc} = await notionRenderer.render(id, title, true)
+    const {content, toc} = await notionArticleRenderer.render(id, title, true)
     console.log('toc: ', toc)
     return <>
         <div className="font-mono mb-10">

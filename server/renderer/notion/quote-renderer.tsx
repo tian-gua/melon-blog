@@ -1,16 +1,7 @@
 import BaseRenderer from "@/server/renderer/notion/base-renderer";
 import {Renderer} from "@/server/renderer/renderer";
-import {NotionRenderer} from "@/server/renderer/notion-renderer";
-import Link from "next/link";
 
 class QuoteRenderer extends BaseRenderer implements Renderer {
-    private notionRenderer: NotionRenderer
-
-    constructor(notionRenderer: NotionRenderer) {
-        super()
-        this.notionRenderer = notionRenderer
-    }
-
     async render(block: Block) {
         if (block.quote.rich_text.length === 0) {
             return <></>

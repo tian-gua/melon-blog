@@ -28,6 +28,7 @@ const Toc = (props: { id: string, data: TocData }) => {
             const bottom = document.documentElement.scrollHeight - document.documentElement.clientHeight
             if (window.scrollY >= bottom) {
                 setActiveId(props.data.children[props.data.children.length - 1].id)
+                return
             }
 
             const distances: { id: string, distance: number }[] = []

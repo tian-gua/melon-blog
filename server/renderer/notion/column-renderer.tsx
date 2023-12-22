@@ -1,18 +1,17 @@
 import BaseRenderer from "@/server/renderer/notion/base-renderer";
 import {Renderer} from "@/server/renderer/renderer";
-import {NotionRenderer} from "@/server/renderer/notion-renderer";
+import {NotionArticleRenderer} from "@/server/renderer/notion-article-renderer";
 
 class ColumnRenderer extends BaseRenderer implements Renderer {
+    private notionArticleRenderer: NotionArticleRenderer
 
-    private notionRenderer: NotionRenderer
-
-    constructor(notionRenderer: NotionRenderer) {
+    constructor(notionArticleRenderer: NotionArticleRenderer) {
         super()
-        this.notionRenderer = notionRenderer
+        this.notionArticleRenderer = notionArticleRenderer
     }
 
     async render(block: Block) {
-        const {content} = await this.notionRenderer.render(block.id)
+        const {content} = await this.notionArticleRenderer.render(block.id)
         return <div className="w-full h-auto flex gap-20 mt-10">{content}</div>
     }
 }

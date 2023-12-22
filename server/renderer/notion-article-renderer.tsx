@@ -15,7 +15,7 @@ import ColumnListRenderer from "@/server/renderer/notion/column-list-renderer";
 import BulletedListRenderer from "@/server/renderer/notion/bulleted-list-renderer";
 import Toc from "@/server/renderer/toc";
 
-export class NotionRenderer {
+export class NotionArticleRenderer {
 
     private readonly rendererMap: Map<string, Renderer>
     private cache: Map<string, CacheObject<Block[]>>
@@ -33,7 +33,7 @@ export class NotionRenderer {
         this.rendererMap.set('code', new CodeRenderer())
         this.rendererMap.set('table', new TableRenderer(this))
         this.rendererMap.set('table_row', new TableRowRenderer())
-        this.rendererMap.set('quote', new QuoteRenderer(this))
+        this.rendererMap.set('quote', new QuoteRenderer())
         this.rendererMap.set('column', new ColumnRenderer(this))
         this.rendererMap.set('column_list', new ColumnListRenderer(this))
         this.rendererMap.set('bulleted_list_item', new BulletedListRenderer())
@@ -127,5 +127,5 @@ export class NotionRenderer {
     }
 }
 
-const notionRenderer: NotionRenderer = new NotionRenderer()
-export default notionRenderer
+const notionArticleRenderer: NotionArticleRenderer = new NotionArticleRenderer()
+export default notionArticleRenderer
