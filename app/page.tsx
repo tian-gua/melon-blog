@@ -6,8 +6,10 @@ import BrowserUtils from "@/server/utils/browser-utils";
 import Tags from "@/components/tags";
 
 export default async function Home() {
-
     const database = await notionService.getDatabase();
+    if (!database) {
+        return <></>
+    }
     let aboutMe = ''
     const blogGroup = new Map<string, Blog[]>()
     const results: NotionData[] = database.data ? database.data.results : database.results

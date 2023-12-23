@@ -2,7 +2,7 @@ import productNotionService from "@/server/service/prod-notion-service";
 import devNotionService from "@/server/service/dev-notion-service";
 
 class NotionService {
-    private database: any
+    private database: any = undefined
     private lastUpdated: number = 0
 
     async getDatabase() {
