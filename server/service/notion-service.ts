@@ -13,6 +13,7 @@ class NotionService {
         const notionServiceImpl: INotionService = process.env.NODE_ENV === 'development' ? devNotionService : productNotionService
         this.database = await notionServiceImpl.getDatabase()
         this.lastUpdated = Date.now()
+        return this.database
     }
 
     listPageBlock(id: string, options?: RenderOptions) {
