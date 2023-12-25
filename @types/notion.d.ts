@@ -73,7 +73,7 @@ declare type Blog = {
     type: string
     category: string
     tags: string[]
-    Status: string
+    status: string | undefined
 }
 
 declare type RichText = {
