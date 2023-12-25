@@ -1,0 +1,45 @@
+.tags {
+    margin-right: 20px;
+    overflow: hidden;
+    padding: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.tag {
+    background: #f0f0f0;
+    border-radius: 3px;
+    color: #7a7a7a;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 15px 0 10px;
+    position: relative;
+    text-decoration: none;
+    -webkit-transition: color 0.2s;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.tag::before {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+    content: '';
+    height: 6px;
+    right: 5px;
+    position: absolute;
+    width: 6px;
+    top: 10px;
+}
+
+/*.tag:hover {*/
+/*    background-color: crimson;*/
+/*}*/
+
+/*.tag:hover::after {*/
+/*    border-left-color: crimson;*/
+/*}*/

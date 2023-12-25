@@ -2,7 +2,6 @@ import React from "react";
 import Description from "@/components/description";
 import Contact from "@/components/contact";
 import notionService from "@/server/service/notion-service";
-import BrowserUtils from "@/server/utils/browser-utils";
 import Tags from "@/components/tags";
 
 export default async function Home() {
@@ -12,6 +11,7 @@ export default async function Home() {
         const blogs = await notionService.getCategoryBlogs(category)
         categoryBlogs.set(category, blogs!)
     }
+    const tags = await notionService.getBlogTags()
 
     return (
         <div className="font-mono">
@@ -32,10 +32,10 @@ export default async function Home() {
                             categoryBlogs.get(category)!.map((blog: Blog) => {
                                 return <div key={blog.id}
                                             className="w-full h-10 px-3 flex justify-between items-center hover:bg-gray-100 rounded-md">
-                                    <div className="flex-1">
+                                    <div className="flex-1 flex justify-start items-center">
                                         <a href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
-                                        <Tags/>
                                     </div>
+                                    <Tags tags={tags.get(blog.id)}/>
                                     <span className="text-gray-400">{blog.date}</span>
                                 </div>
                             })

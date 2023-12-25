@@ -4,6 +4,7 @@ import devNotionService from "@/server/service/dev-notion-service";
 class NotionService {
     private blogs: Blog[] = []
     private categoryBlogs = new Map<string, Blog[]>()
+    private tags = new Map<string, string[]>()
     private categories: string[] = []
     private lastUpdated: number = 0
 
@@ -37,6 +38,7 @@ class NotionService {
         })
 
         this.categoryBlogs.clear()
+        this.tags.clear()
         this.blogs.forEach((blog) => {
             if (blog.category && this.categories.indexOf(blog.category) === -1) {
                 this.categories.push(blog.category)
@@ -46,12 +48,20 @@ class NotionService {
             } else {
                 this.categoryBlogs.set(blog.category, [blog])
             }
+
+            blog.tags.forEach((tag) => {
+                if (this.tags.get(blog.id)) {
+                    this.tags.get(blog.id)!.push(tag)
+                } else {
+                    this.tags.set(blog.id, [tag])
+                }
+            })
         })
 
         this.categories.sort((a, b) => {
             return a.localeCompare(b)
         })
-        // console.log(`categoryBlogs: ${JSON.stringify(this.categoryBlogs)}`)
+        console.log(`blogs: ${JSON.stringify(this.blogs)}`)
     }
 
     async getCategoryBlogs(category: string) {
@@ -70,6 +80,11 @@ class NotionService {
 
         await this.fetchBLogList()
         return this.categories
+    }
+
+
+    async getBlogTags() {
+        return this.tags
     }
 
     listPageBlock(id: string, options?: RenderOptions) {

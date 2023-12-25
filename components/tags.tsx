@@ -2,17 +2,26 @@
 
 import BrowserUtils from "@/server/utils/browser-utils";
 import React from "react";
+import Styles from "./tags.module.css";
 
-const Tags = () => {
+const Tags = (props: { tags: string[] | undefined }) => {
     const [userAgent, setUserAgent] = React.useState<string>('')
     React.useEffect(() => {
         setUserAgent(navigator.userAgent)
     }, []);
 
+    console.log(props.tags)
+
     return <>
-        <div className="ml-2 inline-block">
-            {/*{BrowserUtils.isMobile(userAgent) ? <></> : <span className="box-border text-[11px] bg-pink-300 font-bold py-[2px] px-[3px] rounded">PC用户</span>}*/}
-        </div>
+        <span className="ml-2">
+            {BrowserUtils.isMobile(userAgent) ? <></> :
+                <span className={Styles.tags}>
+                    {props.tags?.map((tag) => {
+                        return <a key={tag} className={`${Styles.tag}`}>{tag}</a>
+                    })}
+                </span>
+            }
+        </span>
     </>
 }
 
