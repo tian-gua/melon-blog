@@ -1,13 +1,16 @@
-My personal website, built with Next.js and Tailwind CSS.
+## 介绍
+`melon-blog`是一个基于next.js + notion(笔记软件)的一个博客项目,项目可以直接在[vercel](http://vercel.com)上部署,不需要自己搭建服务器.
 
-## Getting Started
+做这个项目最初的原因是想有一个简约风格的博客,并且能够使用notion来写文章内容,notion的api正好能够支撑这个需求.
 
-First, run the development server:
+体验地址: [melon-blog](http://www.tiangua.info)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+![notion.png](screenshot/notion.png)
+
+![home_page.png](screenshot/home_page.png)
+
+![article.png](screenshot/article.png)
+
+## 讨论群
+如果你对这个项目感兴趣,并切有一些想法,可以加我微信,然后拉你进讨论群  
+![wechat.png](screenshot/wechat.png)
