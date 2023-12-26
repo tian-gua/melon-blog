@@ -10,8 +10,6 @@ const Tags = (props: { tags: string[] | undefined }) => {
         setUserAgent(navigator.userAgent)
     }, []);
 
-    console.log(props.tags)
-
     return <>
         <span className="ml-2">
             {BrowserUtils.isMobile(userAgent) ? <></> :

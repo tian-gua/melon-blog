@@ -30,6 +30,9 @@ class NotionService {
                 tags: tags,
                 status: properties.Status ? properties.Status.select.name : undefined
             }
+            if (blog.status !== 'Published') {
+                continue
+            }
             blogs.push(blog)
         }
 
@@ -61,7 +64,7 @@ class NotionService {
         this.categories.sort((a, b) => {
             return a.localeCompare(b)
         })
-        console.log(`blogs: ${JSON.stringify(this.blogs)}`)
+        // console.log(`blogs: ${JSON.stringify(this.blogs)}`)
     }
 
     async getCategoryBlogs(category: string) {
