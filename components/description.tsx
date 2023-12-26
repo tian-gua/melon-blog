@@ -26,9 +26,8 @@ const Description = () => {
             <div className="mt-2 text-gray-600 antialiased text-[0.9em]">
                 <p className="flex flex-wrap py-1"><span>🧑‍💻&nbsp;全栈开发者&nbsp;/&nbsp;</span><span>Full-stack Developer</span>
                 </p>
-                <p className="flex flex-wrap py-1">🤩&nbsp;正在做一些有趣的事 / Working on something interesting</p>
+                {/*<p className="flex flex-wrap py-1">🤩&nbsp;正在做一些有趣的事 / Working on something interesting</p>*/}
                 <p className="flex flex-wrap py-1">🥰&nbsp;我正在经营一个研发工作室,如果您有项目需要合作,可以联系我</p>
-                <p className="flex flex-wrap py-1">&nbsp;&nbsp; I am running a Programming Studio, if you have a project that needs cooperation, you can contact me</p>
             </div>
         </div>
     </>

@@ -30,12 +30,12 @@ class BaseRenderer {
             style.color = annotations.color
         }
         if (annotations.code) {
-            style.backgroundColor = '#e5e7eb'
+            style.backgroundColor = '#f2f2f2'
             style.display = "inline-block"
-            style.padding = "2px 4px"
-            style.color = "red"
-            style.fontSize = "14px"
-            style.borderRadius = "6px"
+            style.padding = "1px 3px"
+            style.color = '#5d5d5d'
+            style.fontSize = "13px"
+            style.borderRadius = "3px"
         }
         return style
     }

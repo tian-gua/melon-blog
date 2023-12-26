@@ -1,6 +1,6 @@
 .index {
     position: fixed;
-    width: 250px;
+    width: 200px;
     /*max-width: 250px;*/
     padding: 1rem;
     top: 20%;
@@ -13,14 +13,14 @@
 
     /*text-decoration: underline;*/
 
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
     /*color: blue;*/
 
-    border-top: 1px solid #eaeaea;
-    border-left: 1px solid #eaeaea;
-    border-bottom: 1px solid #eaeaea;
+    /*border-top: 1px solid #eaeaea;*/
+    border-left: 2px solid #eaeaea;
+    /*border-bottom: 1px solid #eaeaea;*/
 
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1) inset;
+    /*box-shadow: 0 0 4px rgba(0, 0, 0, 0.1) inset;*/
 }
 
 .index a {
@@ -41,8 +41,8 @@
 }
 
 .active {
-    color: #0070f3;
+    color: #011fea;
     font-weight: bold;
     font-size: 14px;
-    /*text-decoration: underline;*/
+    text-decoration: underline;
 }

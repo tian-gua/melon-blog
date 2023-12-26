@@ -10,7 +10,7 @@ class CodeRenderer extends BaseRenderer implements Renderer {
         }
         const hlCode = hljs.highlightAuto(code).value
         const pres = hlCode.split('\n').map((line, index) => {
-            return <pre key={index}><code className="" dangerouslySetInnerHTML={{__html: line}}/></pre>
+            return <pre key={index} data-prefix={index+1}><code className="" dangerouslySetInnerHTML={{__html: line}}/></pre>
         })
         return <div key={block.id} className="w-full mockup-code mb-5 text-[0.9em] font-mono">{pres}</div>
     }
