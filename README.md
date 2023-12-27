@@ -12,5 +12,5 @@
 ![article.png](screenshot/article.png)
 
 ## 讨论群
-如果你对这个项目感兴趣,并切有一些想法,可以加我微信,然后拉你进讨论群  
-![wechat.png](screenshot/wechat.png)
+如果你对这个项目感兴趣,并切有一些想法,可以加我微信,备注melon-blog,我拉你进讨论群  
+<img src="screenshot/wechat.png" width="200">
