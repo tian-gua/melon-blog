@@ -21,7 +21,7 @@ export default async function Home() {
             <Contact/>
             <div className="text-base antialiased">
                 {categories.map((category: string) => {
-                    return <div key={category} className="w-full mt-5 text-[1em]">
+                    return <div key={category} className="w-full mt-5 text-[1em] bg-white rounded-lg p-4 border border-gray-300">
                         <div className="w-full h-10 px-3 flex justify-end items-center">
                             <h1 className="font-bold text-[1.5em] grow">
                                 {category.split('-')[1]}
@@ -31,7 +31,7 @@ export default async function Home() {
                         {
                             categoryBlogs.get(category)!.map((blog: Blog) => {
                                 return <div key={blog.id}
-                                            className="w-full h-10 px-3 flex justify-between items-center hover:bg-gray-100 rounded-md">
+                                            className="w-full h-10 px-3 flex justify-between items-center hover:bg-gray-100 rounded">
                                     <div className="flex-1 flex justify-start items-center">
                                         <a href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
                                     </div>

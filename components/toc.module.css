@@ -1,26 +1,16 @@
 .index {
     position: fixed;
-    width: 200px;
-    /*max-width: 250px;*/
-    padding: 1rem;
-    top: 20%;
-    right: 0;
+    width: 220px;
+    padding: 1rem 1rem 2rem 1rem;
+    top: 10%;
+    right: 10px;
     display: flex;
     align-items: start;
     justify-content: start;
     flex-direction: column;
     font-size: x-small;
-
-    /*text-decoration: underline;*/
-
-    /*background-color: #ffffff;*/
-    /*color: blue;*/
-
-    /*border-top: 1px solid #eaeaea;*/
-    border-left: 2px solid #eaeaea;
-    /*border-bottom: 1px solid #eaeaea;*/
-
-    /*box-shadow: 0 0 4px rgba(0, 0, 0, 0.1) inset;*/
+    background-color: #ffffff;
+    border-radius: 6px;
 }
 
 .index a {

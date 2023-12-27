@@ -1,24 +1,26 @@
 import './globals.css'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
-import Link from "next/link";
 import React from "react";
 import Script from "next/script"
 import Footer from "@/components/footer";
 import Navigator from "@/components/navigator";
-import Avatar from "@/components/avatar";
+import Head from "next/head";
 
 
 const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
     title: process.env.BLOG_NAME,
-    description: '欢迎来到 Melon 的博客',
+    description: 'Melon\'s blog',
 }
 
 export default function RootLayout({children,}: { children: React.ReactNode }) {
     return (
-        <html>
+        <html className={"bg-[#F1EFEA]"}>
+        <head>
+            <link rel='shortcut icon' href='/watermelon.svg'/>
+        </head>
         <Script async strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-YS74P2SD7M"/>
         <Script id="google-analytics" strategy="afterInteractive" dangerouslySetInnerHTML={{
             __html: `
@@ -41,17 +43,15 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
                   `
         }}/>
         <body className={inter.className}>
-        <div className="h-full w-full flex justify-center font-mono bg-white">
+        <div className="h-full w-full flex justify-center font-mono flex-col items-center">
+            <Navigator/>
             <div
-                className="w-full max-w-[1024px] h-full pt-10 px-10 border-gray-500 flex justify-between flex-wrap box-border">
-                {/*头像*/}
-                <Avatar/>
+                className="w-full max-w-[1024px] h-full mt-20 px-2 border-gray-500 flex flex-wrap box-border">
                 {/*导航*/}
-                <Navigator/>
+
                 <div className="w-full mt-10">
                     {children}
                 </div>
-
                 <Footer/>
             </div>
         </div>
