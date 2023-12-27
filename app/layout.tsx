@@ -5,7 +5,6 @@ import React from "react";
 import Script from "next/script"
 import Footer from "@/components/footer";
 import Navigator from "@/components/navigator";
-import Head from "next/head";
 
 
 const inter = Inter({subsets: ['latin']})

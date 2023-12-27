@@ -5,7 +5,7 @@ import Tags from "@/components/tags";
 export default async function ArticleList({params}: { params: { slug: string } }) {
     const categoryBlogs: Blog[] | undefined = await notionService.getCategoryBlogs(decodeURIComponent(params.slug))
     const tags = await notionService.getBlogTags()
-    return <div className="text-base antialiased bg-white p-10 border border-gray-300 rounded-lg">
+    return <div className="text-base antialiased bg-white p-10 border border-[#d8d6de] shadow-sm rounded-lg">
         <h1 className="w-full h-full px-3 font-extrabold text-[1.5em] mb-5">
             {decodeURIComponent(params.slug).split('-')[1]}
         </h1>

@@ -4,8 +4,8 @@ import Avatar from "@/components/avatar";
 const Navigator = () => {
     return <>
         {/*头像*/}
-        <div className={"w-full h-16 flex justify-between  bg-white px-20 fixed top-0 z-10 pb-1 border-b border-b-gray-300"}>
-            <div className={"flex-1 flex justify-start items-center"}>
+        <div className={"w-full h-16 flex justify-between  bg-white px-20 fixed top-0 z-10 pb-1 border-b border-b-[#d8d6de] shadow-sm"}>
+            <a className={"flex justify-start items-center"} href={"/"}>
                 <svg className="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="6304" width="40" height="40">
                     <path
@@ -61,12 +61,12 @@ const Navigator = () => {
                         fill="#543630" p-id="6321"></path>
                 </svg>
                 <h1 className={"font-serif font-bold text-[20px]"}>{'MelonBlog'}</h1>
-            </div>
+            </a>
+            <div className={"flex-1"}></div>
             <div className={"flex justify-center items-center"}>
-                <div className="h-full w-40 grid content-center">
+                <div className="h-full w-30 grid content-center">
                     <div
                         className="h-10 flex justify-between items-center px-8 text-sm font-bold text-gray-600">
-                        <a href="/">首页</a>
                         <a href="/">作品集</a>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ const Blog = async ({params}: { params: { slug: string[] } }) => {
     const {content, toc} = await notionArticleRenderer.render(id, title, true)
     console.log('toc: ', toc)
     return <>
-        <div className="font-mono mb-10 p-10 bg-white border border-gray-300 rounded-lg">
+        <div className="font-mono mb-10 p-10 bg-white border border-[#d8d6de] shadow-sm rounded-lg">
             <h1 id={id} className="w-full mx-auto text-center text-[1.8em]">{title}</h1>
             <div className="divider"></div>
             <div className="text-base antialiased">
