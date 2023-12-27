@@ -1,14 +1,15 @@
 .index {
     position: fixed;
-    width: 220px;
-    padding: 1rem 1rem 2rem 1rem;
-    top: 10%;
-    right: 10px;
+    width: calc((100% - 1024px) / 2 * 0.95);
+    max-width: 200px;
+    padding: 1rem 1rem 4rem 1rem;
+    top: 5rem;
+    right: calc(((100% - 1024px) / 2) * 0.05);;
     display: flex;
     align-items: start;
     justify-content: start;
     flex-direction: column;
-    font-size: x-small;
+    font-size: small;
     background-color: #ffffff;
     border-radius: 6px;
 }
@@ -23,11 +24,11 @@
 }
 
 .index .h2 {
-    padding-left: 15px;
+    padding-left: 10px;
 }
 
 .index .h3 {
-    padding-left: 30px;
+    padding-left: 20px;
 }
 
 .active {
