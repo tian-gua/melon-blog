@@ -3,7 +3,7 @@
     width: 15rem;
     padding: 1rem 1rem 4rem 1rem;
     top: 5rem;
-    right: calc(((100% - 1024px) / 2) - 15rem);;
+    right: calc(((100% - 800px) / 2) - 15rem);;
     display: flex;
     align-items: start;
     justify-content: start;

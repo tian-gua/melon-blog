@@ -45,7 +45,7 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
         <div className="h-full w-full flex justify-center font-mono flex-col items-center">
             <Navigator/>
             <div
-                className="w-full max-w-[1024px] h-full mt-10 px-2 border-gray-500 flex flex-wrap box-border">
+                className="w-full max-w-[800px] h-full mt-10 px-2 border-gray-500 flex flex-wrap box-border">
                 {/*导航*/}
 
                 <div className="w-full mt-10">
