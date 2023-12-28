@@ -16,7 +16,6 @@ const Toc = (props: { id: string, data: TocData }) => {
         }
 
         window.addEventListener('resize', () => {
-            const toc = document.getElementById('toc')
             if (BrowserUtils.isMobile(navigator.userAgent) || document.body.clientWidth <= 1024 + 300) {
                 setHide(true)
             } else {
@@ -74,7 +73,7 @@ const Toc = (props: { id: string, data: TocData }) => {
     }
 
     const render = () => {
-        return <div id="toc" className={`${Styles.index} border border-gray-300`}>
+        return <div id="toc" className={`${Styles.index} border border-gray-300 float-right shadow-sm`}>
             <h1 className={"text-[20px] mb-5 font-black text-black"}>目录</h1>
             {props.data.children.map((child) => {
                 return <a key={child.id}
