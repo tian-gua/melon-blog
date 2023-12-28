@@ -21,18 +21,25 @@ export default async function Home() {
             <Contact/>
             <div className="text-base antialiased">
                 {categories.map((category: string) => {
-                    return <div key={category} className="w-full mt-5 text-[1em] bg-white rounded-lg p-4 border border-[#d8d6de] shadow-sm">
+                    let num = 4
+                    if (category.indexOf('编程') != -1) {
+                        num = 16
+                    }
+                    return <div key={category}
+                                className="w-full mt-5 text-[1em] bg-white rounded-lg p-4 border border-[#d8d6de] shadow-sm">
                         <div className="w-full h-10 px-3 flex justify-end items-center">
                             <h1 className="font-bold text-[1.5em] grow">
                                 {category.split('-')[1]}
                             </h1>
-                            <a className="text-gray-400" href={"/category/" + category}>更多</a>
+                            <a className="text-gray-400" href={"/category/" + category}>更多<span
+                                className="text-sm">({categoryBlogs.get(category)?.length})</span></a>
                         </div>
                         {
-                            categoryBlogs.get(category)!.map((blog: Blog) => {
+                            categoryBlogs.get(category)!.slice(0, num).map((blog: Blog) => {
                                 return <div key={blog.id}
                                             className="w-full h-10 px-3 flex justify-between items-center hover:bg-gray-100 rounded">
-                                    <div className="flex-1 flex justify-start items-center text-ellipsis whitespace-nowrap overflow-x-hidden">
+                                    <div
+                                        className="flex-1 flex justify-start items-center text-ellipsis whitespace-nowrap overflow-x-hidden">
                                         <a href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
                                     </div>
                                     <Tags tags={tags.get(blog.id)}/>
