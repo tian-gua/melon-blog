@@ -68,6 +68,7 @@ class NotionService {
     }
 
     async getCategoryBlogs(category: string) {
+        console.log(`lastUpdated: ${this.lastUpdated}, now: ${Date.now()}, diff: ${this.lastUpdated + 60 * 1000 - Date.now()}`)
         if (this.lastUpdated + 60 * 1000 > Date.now() && this.categoryBlogs.has(category)) {
             return this.categoryBlogs.get(category)
         }
@@ -77,6 +78,7 @@ class NotionService {
     }
 
     async getCategories(): Promise<string[]> {
+        console.log(`lastUpdated: ${this.lastUpdated}, now: ${Date.now()}, diff: ${this.lastUpdated + 60 * 1000 - Date.now()}`)
         if (this.lastUpdated + 60 * 1000 > Date.now() && this.categories) {
             return this.categories
         }

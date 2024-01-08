@@ -14,6 +14,7 @@ class ProdNotionService implements INotionService {
             next: {
                 revalidate: 60
             },
+            cache: 'no-cache',
             method: 'POST',
             headers: {
                 'Authorization': this.authorization,
