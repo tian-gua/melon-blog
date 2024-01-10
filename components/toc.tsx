@@ -85,20 +85,22 @@ const Toc = (props: { id: string, data: TocData }) => {
                           className={`${child.level == 2 ? Styles.h2 : child.level == 3 ? Styles.h3 : undefined} ${activeId === child.id ? Styles.active : null} flex justify-start items-center w-full`}>
                     {child.level == 2 ?
                         <svg className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                             width="16" height="16">
+                             width="14" height="14">
                             <path
                                 d="M512 277.333333a234.666667 234.666667 0 1 0 0 469.333334 234.666667 234.666667 0 0 0 0-469.333334z"
                                 fill="#000000" fillOpacity=".85"></path>
                         </svg> : <></>}
 
                     {child.level == 3 ?
-                        <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6708"
-                             width="16" height="16">
-                            <path
-                                d="M288 512a224 224 0 1 1 448 0 224 224 0 0 1-448 0zM512 352a160 160 0 1 0 0 320 160 160 0 0 0 0-320z"
-                                fill="#000000"></path>
-                        </svg> : <></>}
-                    <span className={`${child.level == 1 ? "text-[14px] font-bold" : ""}`}>{child.title}</span>
+                        <div>
+                            <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6708"
+                                 width="14" height="14">
+                                <path
+                                    d="M288 512a224 224 0 1 1 448 0 224 224 0 0 1-448 0zM512 352a160 160 0 1 0 0 320 160 160 0 0 0 0-320z"
+                                    fill="#000000"></path>
+                            </svg>
+                        </div> : <></>}
+                    <span className={`${child.level == 1 ? "text-[15px] mb-1" : ""}`}>{child.title}</span>
                 </a>
             })}
         </div>

@@ -19,10 +19,6 @@
     text-overflow: ellipsis;
 }
 
-.index .h1 {
-    font-size: 1.5rem;
-}
-
 .index .h3 {
     padding-left: 1rem;
 }
@@ -30,5 +26,4 @@
 .active {
     color: #7450bd;
     font-weight: bold;
-    font-size: 14px;
 }
