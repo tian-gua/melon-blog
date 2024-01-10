@@ -87,10 +87,20 @@ class NotionService {
         return this.categories
     }
 
-
     async getBlogTags() {
         return this.tags
     }
+
+    async getBlog(id: string) {
+        console.log(`lastUpdated: ${this.lastUpdated}, now: ${Date.now()}, diff: ${this.lastUpdated + 60 * 1000 - Date.now()}`)
+        if (this.lastUpdated + 60 * 1000 > Date.now() && this.blogs) {
+            return this.blogs.find((blog) => blog.id === id)
+        }
+
+        await this.fetchBLogList()
+        return this.blogs.find((blog) => blog.id === id)
+    }
+
 
     listPageBlock(id: string, options?: RenderOptions) {
         const notionServiceImpl: INotionService = process.env.NODE_ENV === 'development' ? devNotionService : productNotionService

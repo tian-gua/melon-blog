@@ -40,7 +40,7 @@ export default async function Home() {
                                             className="w-full h-10 px-3 flex justify-between items-center hover:bg-gray-100 rounded">
                                     <div
                                         className="flex-1 flex justify-start items-center text-ellipsis whitespace-nowrap overflow-x-hidden">
-                                        <a href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
+                                        <a href={`/blog/${blog.id}`}>{blog.title}</a>
                                     </div>
                                     <Tags tags={tags.get(blog.id)}/>
                                     <span className="text-gray-400">{blog.date}</span>
