@@ -14,7 +14,7 @@ export default async function ArticleList({params}: { params: { slug: string } }
                 return <div key={blog.id}
                             className="w-full h-10 px-3 flex justify-end items-center hover:bg-gray-100 rounded-md">
                     <a className="grow"
-                       href={`/blog/${blog.id}/${blog.title}`}>{blog.title}</a>
+                       href={`/blog/${blog.id}`}>{blog.title}</a>
                     <Tags tags={tags.get(blog.id)}/>
                     <span className="text-gray-400">{blog.date}</span>
                 </div>
