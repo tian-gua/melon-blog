@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children,}: { children: React.ReactNode }) {
     return (
-        <html className={"bg-[#f4f6f9]"}>
+        <html className={"bg-gray-100"}>
         <head>
             <link rel='shortcut icon' href='/watermelon.svg'/>
         </head>

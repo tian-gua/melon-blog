@@ -26,7 +26,7 @@ p {
 
 .sketchy {
     padding: 5px 1rem;
-    display: inline-block;
+    /*display: inline-block;*/
     border: 1px solid #333333;
     /*font-size: 2.5rem;*/
     border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;

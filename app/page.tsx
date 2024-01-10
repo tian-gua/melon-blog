@@ -26,7 +26,7 @@ export default async function Home() {
                         num = 16
                     }
                     return <div key={category}
-                                className="w-full mt-5 text-[1em] bg-white p-4 shadow-md">
+                                className="w-full mt-5 text-[1em] bg-white p-4 shadow-md rounded">
                         <div className="w-full h-10 px-3 flex justify-end items-center">
                             <h1 className="font-bold text-[1.5em] grow">
                                 {category.split('-')[1]}

@@ -12,25 +12,23 @@
     background-color: #ffffff;
 }
 
-.index a {
-    width: 100%;
+.index a span {
     cursor: pointer;
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.index .h2 {
-    padding-left: 1rem;
+.index .h1 {
+    font-size: 1.5rem;
 }
 
 .index .h3 {
-    padding-left: 2rem;
+    padding-left: 1rem;
 }
 
 .active {
-    color: #011fea;
+    color: #7450bd;
     font-weight: bold;
     font-size: 14px;
-    text-decoration: underline;
 }
