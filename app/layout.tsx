@@ -19,7 +19,11 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
         <html className={"bg-gray-100"}>
         <head>
             <link rel='shortcut icon' href='/watermelon.svg'/>
+            <Script async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8788229854530590"
+                    crossOrigin="anonymous"></Script>
         </head>
+
         <Script async strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-YS74P2SD7M"/>
         <Script id="google-analytics" strategy="afterInteractive" dangerouslySetInnerHTML={{
             __html: `
