@@ -33,7 +33,7 @@ const Contact = () => {
             {/*            d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>*/}
             {/*    </svg>*/}
             {/*</a>*/}
-            <a className="block p-2 rounded-full text-gray-600 transition-colors hover:bg-[#1d9bf0] hover:text-white" href={"/blog/c17e78bf-961b-4af5-aada-252ef6af0093/关于我#d5da913f-4304-4cd3-8ffe-36149db34bc6"}>
+            <a className="block p-2 rounded-full text-gray-600 transition-colors hover:bg-[#1d9bf0] hover:text-white" href={"/blog/c17e78bf-961b-4af5-aada-252ef6af0093#d5da913f-4304-4cd3-8ffe-36149db34bc6"}>
                 <svg className="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5261" width="20" height="20">
                     <path
