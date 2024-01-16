@@ -18,7 +18,7 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
     return (
         <html className={"bg-gray-100"}>
         <head>
-            <link rel='shortcut icon' href='/watermelon.svg'/>
+            <link rel='shortcut icon' href='/M.png'/>
             <Script async
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8788229854530590"
                     crossOrigin="anonymous"></Script>
