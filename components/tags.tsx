@@ -10,10 +10,15 @@ const Tags = (props: { tags: string[] | undefined }) => {
         setUserAgent(navigator.userAgent)
     }, []);
 
+    // if (!userAgent) {
+    //     return <></>
+    // }
+
     return <>
         <span className="ml-2">
-            {BrowserUtils.isMobile(userAgent) ? <></> :
-                <span className={Styles.tags}>
+            {
+                BrowserUtils.isMobile(userAgent) ? <></> :
+                    <span className={Styles.tags}>
                     {props.tags?.map((tag) => {
                         return <a key={tag} className={`${Styles.tag}`}>{tag}</a>
                     })}

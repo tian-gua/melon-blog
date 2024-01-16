@@ -16,7 +16,6 @@ const Blog = async ({params}: { params: { slug: string } }) => {
                 <Toc id={id} data={toc!}/>
             </div>
         </div>
-
     </>
 }
 

@@ -28,7 +28,8 @@ class NotionService {
                 type: properties.Type.select.name,
                 category: properties.Category.select?.name,
                 tags: tags,
-                status: properties.Status ? properties.Status.select.name : undefined
+                status: properties.Status ? properties.Status.select.name : undefined,
+                isNew: Date.now() - new Date(properties.Date.date.start).getTime() < 7 * 24 * 60 * 60 * 1000
             }
             if (blog.status !== 'Published') {
                 continue

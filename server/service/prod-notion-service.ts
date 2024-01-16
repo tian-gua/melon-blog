@@ -11,9 +11,6 @@ class ProdNotionService implements INotionService {
 
     async getDatabase() {
         const res = await fetch(`https://api.notion.com/v1/databases/${this.databaseId}/query`, {
-            next: {
-                revalidate: 60
-            },
             cache: 'no-cache',
             method: 'POST',
             headers: {

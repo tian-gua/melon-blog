@@ -74,6 +74,7 @@ declare type Blog = {
     category: string
     tags: string[]
     status: string | undefined
+    isNew: boolean
 }
 
 declare type RichText = {
