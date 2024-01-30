@@ -77,7 +77,7 @@ const Toc = (props: { id: string, data: TocData }) => {
 
     const render = () => {
         return <div id="toc" className={`${Styles.index} w-full shadow-md rounded`}>
-            <h1 className={"text-[20px] mb-5 fonts-black text-black"}>目录</h1>
+            <h1 className={"text-[20px] mb-5 font-black text-black"}>目录</h1>
             {props.data.children.map((child) => {
                 return <a key={child.id} onClick={() => {
                     scrollToTargetAdjusted(child.id)

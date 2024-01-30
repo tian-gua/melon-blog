@@ -11,7 +11,7 @@ class H3Renderer extends BaseRenderer implements Renderer {
                  xmlns="http://www.w3.org/2000/svg" p-id="26205" width="16" height="16">
                 <path d="M682.666667 512L341.333333 768V256l341.333334 256z" fill="#000000" p-id="26206"></path>
             </svg>
-            <h3 id={block.id} className={"text-[1.1em] fonts-bold block mt-2 mb-2"} style={style}>{text}</h3>
+            <h3 id={block.id} className={"text-[1.1em] font-bold block mt-2 mb-2"} style={style}>{text}</h3>
         </div>
     }
 }
