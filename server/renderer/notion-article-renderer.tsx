@@ -123,7 +123,7 @@ export class NotionArticleRenderer {
             }
         }
 
-        return {content: elements, toc: root ? this.tocMap.get(id)! : null};
+        return {content: elements, toc: root ? this.tocMap.get(id)!.arrange() : null};
     }
 }
 

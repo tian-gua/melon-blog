@@ -77,30 +77,15 @@ const Toc = (props: { id: string, data: TocData }) => {
 
     const render = () => {
         return <div id="toc" className={`${Styles.index} w-full shadow-md rounded`}>
-            <h1 className={"text-[20px] mb-5 font-black text-black"}>目录</h1>
+            <h1 className="text-[20px] mb-2 font-black text-black">目录</h1>
+            <hr className="w-full mb-2"></hr>
             {props.data.children.map((child) => {
-                return <a key={child.id} onClick={() => {
-                    scrollToTargetAdjusted(child.id)
-                }}
+                if (child.level == 1) {
+                    return null
+                }
+                return <a key={child.id} onClick={() => {scrollToTargetAdjusted(child.id)}}
                           className={`${child.level == 2 ? Styles.h2 : child.level == 3 ? Styles.h3 : undefined} ${activeId === child.id ? Styles.active : null} flex justify-start items-center w-full`}>
-                    {child.level == 2 ?
-                        <svg className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                             width="14" height="14">
-                            <path
-                                d="M512 277.333333a234.666667 234.666667 0 1 0 0 469.333334 234.666667 234.666667 0 0 0 0-469.333334z"
-                                fill="#000000" fillOpacity=".85"></path>
-                        </svg> : <></>}
-
-                    {child.level == 3 ?
-                        <div>
-                            <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6708"
-                                 width="14" height="14">
-                                <path
-                                    d="M288 512a224 224 0 1 1 448 0 224 224 0 0 1-448 0zM512 352a160 160 0 1 0 0 320 160 160 0 0 0 0-320z"
-                                    fill="#000000"></path>
-                            </svg>
-                        </div> : <></>}
-                    <span className={`${child.level == 1 ? "text-[15px] mb-1" : ""}`}>{child.title}</span>
+                    <span>{child.title}</span>
                 </a>
             })}
         </div>

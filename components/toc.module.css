@@ -17,13 +17,20 @@
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
 }
 
 .index .h3 {
     padding-left: 1rem;
+    color: #888888;
+}
+
+.index .h2 {
+
 }
 
 .active {
-    color: #7450bd;
-    font-weight: bold;
+    font-weight: bolder;
+    border-left: 4px solid #3e9f51;
+    padding-left: 0.5em;
 }
