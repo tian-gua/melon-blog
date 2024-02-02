@@ -1,4 +1,4 @@
-import mongoose, {Model, Schema} from "mongoose";
+import {Schema} from "mongoose";
 
 export const AccessLogModelSchema = new Schema({
     page_id: String,
