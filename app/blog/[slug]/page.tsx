@@ -2,6 +2,7 @@ import 'highlight.js/styles/github-dark.css';
 import notionArticleRenderer from "@/server/renderer/notion-article-renderer";
 import Toc from "@/components/toc";
 import notionService from "@/server/service/notion-service";
+import AccessLog from "@/components/access_log";
 
 const Blog = async ({params}: { params: { slug: string } }) => {
     const id = params.slug
@@ -16,6 +17,7 @@ const Blog = async ({params}: { params: { slug: string } }) => {
                 <Toc id={id} data={toc!}/>
             </div>
         </div>
+        <AccessLog page_id={id}/>
     </>
 }
 

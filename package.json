@@ -15,6 +15,7 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "daisyui": "^4.4.20",
+    "dayjs": "^1.11.10",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
     "highlight.js": "^11.8.0",

@@ -4,6 +4,7 @@ import Contact from "@/components/contact";
 import notionService from "@/server/service/notion-service";
 import Tags from "@/components/tags";
 import Card from "@/components/card";
+import AccessLog from "@/components/access_log";
 
 export default async function Home() {
     const categories = await notionService.getCategories()
@@ -60,6 +61,7 @@ export default async function Home() {
                     </Card>
                 })}
             </div>
+            <AccessLog page_id={'home'}/>
         </div>
     )
 }
