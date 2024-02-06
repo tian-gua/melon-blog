@@ -2,6 +2,7 @@ import Link from "next/link";
 
 class BaseRenderer {
     protected renderRichText(richTexts: RichText[]) {
+        if (richTexts.length === 0) return <br/>
         return richTexts.map((richText, index) => {
             if (richText.text.link && richText.text.link && richText.text.link.url) {
                 return <Link key={index} className={"hover:underline cursor-pointer text-blue-700"}
@@ -30,12 +31,15 @@ class BaseRenderer {
             style.color = annotations.color
         }
         if (annotations.code) {
-            style.backgroundColor = '#f2f2f2'
+            style.backgroundColor = 'rgb(86 86 86)'
             style.display = "inline-block"
-            style.padding = "1px 3px"
-            style.color = '#5d5d5d'
+            style.padding = "2px 4px"
+            style.color = 'white'
             style.fontSize = "13px"
+            style.fontWeight = "900"
             style.borderRadius = "3px"
+            style.lineHeight = "1"
+            style.margin = "0 2px"
         }
         return style
     }

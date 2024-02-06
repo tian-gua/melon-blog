@@ -44,6 +44,9 @@ class NotionService {
         this.categoryBlogs.clear()
         this.tags.clear()
         this.blogs.forEach((blog) => {
+            if (blog.type !== '文章') {
+                return
+            }
             if (blog.category && this.categories.indexOf(blog.category) === -1) {
                 this.categories.push(blog.category)
             }
