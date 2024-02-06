@@ -3,12 +3,6 @@ import {Renderer} from "@/server/renderer/renderer";
 import {NotionArticleRenderer} from "@/server/renderer/notion-article-renderer";
 
 class ColumnListRenderer extends BaseRenderer implements Renderer {
-    private notionArticleRenderer: NotionArticleRenderer
-
-    constructor(notionArticleRenderer: NotionArticleRenderer) {
-        super()
-        this.notionArticleRenderer = notionArticleRenderer
-    }
 
     async render(block: Block) {
         const {content} = await this.notionArticleRenderer.render(block.id)

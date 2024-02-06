@@ -2,6 +2,7 @@ import BaseRenderer from "@/server/renderer/notion/base-renderer";
 import {Renderer} from "@/server/renderer/renderer";
 
 class TableRowRenderer extends BaseRenderer implements Renderer {
+
     async render(block: Block) {
         if (!block || !block.table_row || !block.table_row.cells) {
             return <></>

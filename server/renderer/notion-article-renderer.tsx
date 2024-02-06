@@ -14,30 +14,31 @@ import ColumnRenderer from "@/server/renderer/notion/column-renderer";
 import ColumnListRenderer from "@/server/renderer/notion/column-list-renderer";
 import BulletedListRenderer from "@/server/renderer/notion/bulleted-list-renderer";
 import Toc from "@/server/renderer/toc";
+import numberedListRenderer from "@/server/renderer/notion/numbered-list-renderer";
 
 export class NotionArticleRenderer {
 
     private readonly rendererMap: Map<string, Renderer>
     private cache: Map<string, CacheObject<Block[]>>
-    private delayBlocks: Block[] = []
     private tocMap: Map<string, Toc>
+    private _count: number = 0
 
     constructor() {
         this.cache = new Map<string, CacheObject<Block[]>>()
         this.rendererMap = new Map<string, Renderer>()
-        this.rendererMap.set('heading_1', new H1Renderer())
-        this.rendererMap.set('heading_2', new H2Renderer())
-        this.rendererMap.set('heading_3', new H3Renderer())
-        this.rendererMap.set('image', new ImageRenderer())
-        this.rendererMap.set('paragraph', new ParagraphRenderer())
-        this.rendererMap.set('code', new CodeRenderer())
+        this.rendererMap.set('heading_1', new H1Renderer(this))
+        this.rendererMap.set('heading_2', new H2Renderer(this))
+        this.rendererMap.set('heading_3', new H3Renderer(this))
+        this.rendererMap.set('image', new ImageRenderer(this))
+        this.rendererMap.set('paragraph', new ParagraphRenderer(this))
+        this.rendererMap.set('code', new CodeRenderer(this))
         this.rendererMap.set('table', new TableRenderer(this))
-        this.rendererMap.set('table_row', new TableRowRenderer())
-        this.rendererMap.set('quote', new QuoteRenderer())
+        this.rendererMap.set('table_row', new TableRowRenderer(this))
+        this.rendererMap.set('quote', new QuoteRenderer(this))
         this.rendererMap.set('column', new ColumnRenderer(this))
         this.rendererMap.set('column_list', new ColumnListRenderer(this))
-        this.rendererMap.set('bulleted_list_item', new BulletedListRenderer())
-        this.rendererMap.set('numbered_list_item', new BulletedListRenderer())
+        this.rendererMap.set('bulleted_list_item', new BulletedListRenderer(this))
+        this.rendererMap.set('numbered_list_item', new numberedListRenderer(this))
         this.tocMap = new Map<string, Toc>()
     }
 
@@ -99,31 +100,21 @@ export class NotionArticleRenderer {
                     }
                 }
 
-                if (renderer.immediate()) {
-                    if (this.delayBlocks[0]) {
-                        const tmpJsxElements = []
-                        for (let delayBlock of this.delayBlocks) {
-                            const renderer = this.rendererMap.get(delayBlock.type)
-                            tmpJsxElements.push(await renderer?.render(delayBlock)!)
-                        }
-
-                        if (this.delayBlocks[0].type === 'bulleted_list_item') {
-                            elements.push(<ul
-                                className={"list-disc list-inside mb-2 text-[0.9em]"}>{tmpJsxElements}</ul>)
-                        } else if (this.delayBlocks[0].type === 'numbered_list_item') {
-                            elements.push(<ol
-                                className={"list-decimal list-inside mb-2 text-[0.9em]"}>{tmpJsxElements}</ol>)
-                        }
-                        this.delayBlocks = []
-                    }
-                    elements.push(await renderer?.render(block)!);
+                if (block.type === 'numbered_list_item') {
+                    this._count++
                 } else {
-                    this.delayBlocks.push(block)
+                    this._count = 0
                 }
+                elements.push(await renderer?.render(block)!);
             }
         }
 
         return {content: elements, toc: root ? this.tocMap.get(id)!.arrange() : null};
+    }
+
+
+    get count(): number {
+        return this._count;
     }
 }
 

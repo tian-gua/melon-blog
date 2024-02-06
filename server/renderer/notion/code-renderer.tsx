@@ -3,6 +3,7 @@ import {Renderer} from "@/server/renderer/renderer";
 import hljs from "highlight.js";
 
 class CodeRenderer extends BaseRenderer implements Renderer {
+
     async render(block: Block) {
         let code = ''
         for (const richText of block.code.rich_text) {
