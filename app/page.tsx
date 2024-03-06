@@ -5,6 +5,7 @@ import notionService from "@/server/service/notion-service";
 import Tags from "@/components/tags";
 import Card from "@/components/card";
 import AccessLog from "@/components/access_log";
+import SearchBar from "@/components/search_bar"
 
 export default async function Home() {
     const categories = await notionService.getCategories()
@@ -21,6 +22,8 @@ export default async function Home() {
             <Description/>
             {/*图标跳转区域*/}
             <Contact/>
+            {/*搜索区域*/}
+            <SearchBar/>
             <div className="text-base antialiased">
                 {categories.map((category: string) => {
                     let num = 4

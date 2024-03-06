@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import {AccessLogModelSchema} from './schema';
 import {connection} from './connection';
 
+let Model = mongoose.models.access_log ?? mongoose.model('access_log', AccessLogModelSchema)
+
 export const saveAccessLog = async (log: {
     page_id: string,
     title?: string,
@@ -17,7 +19,7 @@ export const saveAccessLog = async (log: {
     if (mongoose.connection.readyState === 0) {
         await connection();
     }
-    const Model = mongoose.model('access_log', AccessLogModelSchema)
-    const accessLog = new Model(log);
-    await accessLog.save();
+
+    await Model.create(log)
 }
+
