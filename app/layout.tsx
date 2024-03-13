@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children,}: { children: React.ReactNode }) {
     return (
-        <html className={"bg-gray-100"}>
+        <html>
         <head>
             <link rel='shortcut icon' href='/M.png'/>
             <Script async
@@ -45,7 +45,7 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
                     })();
                   `
         }}/>
-        <body className={inter.className}>
+        <body className={`${inter.className}`}>
         <div className="h-full w-full flex justify-center font-mono flex-col items-center">
             <Navigator/>
             <div

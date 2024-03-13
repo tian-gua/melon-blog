@@ -14,7 +14,7 @@ const Card = ({children}: any) => {
     // }
 
     return (
-        <div className={`w-full mt-5 text-[1em] bg-white shadow-md rounded ${BrowserUtils.isMobile(userAgent) ? 'py-4 px-1' : 'p-4'}`}>
+        <div className={`w-full mt-5 text-[1em] bg-white border border-gray-200 ${BrowserUtils.isMobile(userAgent) ? 'py-4 px-1' : 'p-4'}`}>
             {children}
         </div>
     )

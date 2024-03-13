@@ -76,7 +76,7 @@ const Toc = (props: { id: string, data: TocData }) => {
     }
 
     const render = () => {
-        return <div id="toc" className={`${Styles.index} w-full shadow-md rounded`}>
+        return <div id="toc" className={`${Styles.index} w-full border border-gray-200`}>
             <h1 className="text-[20px] mb-2 font-black text-black">目录</h1>
             <hr className="w-full mb-2"></hr>
             {props.data.children.map((child) => {
