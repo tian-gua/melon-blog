@@ -2,9 +2,20 @@ import React from "react";
 import notionService from "@/server/service/notion-service";
 import Tags from "@/components/tags";
 import Card from "@/components/card";
+import {Metadata} from "next";
+
+
+export const metadata: Metadata = {
+    title: '',
+    description: '',
+};
 
 export default async function ArticleList({params}: { params: { slug: string } }) {
     const categoryBlogs: Blog[] | undefined = await notionService.getCategoryBlogs(decodeURIComponent(params.slug))
+
+    metadata.title = decodeURIComponent(params.slug.split('-')[1])
+    metadata.description = decodeURIComponent(params.slug.split('-')[1])
+
     const tags = await notionService.getBlogTags()
     return <div className="text-base antialiased">
         <Card>
