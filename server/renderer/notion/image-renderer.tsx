@@ -1,8 +1,9 @@
 import BaseRenderer from "@/server/renderer/notion/base-renderer";
 import {Renderer} from "@/server/renderer/renderer";
+import {RenderContext} from "@/server/renderer/context";
 
 class ImageRenderer extends BaseRenderer implements Renderer {
-    async render(block: Block) {
+    async render(context: RenderContext, block: Block) {
         const style: any = {}
         const caption = block.image.caption[0]
         if (caption && caption.text?.content) {

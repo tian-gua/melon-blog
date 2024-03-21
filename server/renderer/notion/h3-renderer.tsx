@@ -1,8 +1,9 @@
 import {Renderer} from "@/server/renderer/renderer";
 import BaseRenderer from "@/server/renderer/notion/base-renderer";
+import {RenderContext} from "@/server/renderer/context";
 
 class H3Renderer extends BaseRenderer implements Renderer {
-    async render(block: Block) {
+    async render(context: RenderContext, block: Block) {
         const text = block[block.type].rich_text[0].plain_text
         const style = this.processAnnotation(block[block.type].rich_text[0].annotations)
         return <div className="w-full flex justify-start items-center">

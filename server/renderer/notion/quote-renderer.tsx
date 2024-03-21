@@ -1,8 +1,9 @@
 import BaseRenderer from "@/server/renderer/notion/base-renderer";
 import {Renderer} from "@/server/renderer/renderer";
+import {RenderContext} from "@/server/renderer/context";
 
 class QuoteRenderer extends BaseRenderer implements Renderer {
-    async render(block: Block) {
+    async render(context: RenderContext, block: Block) {
         if (block.quote.rich_text.length === 0) {
             return <></>
         }

@@ -1,15 +1,15 @@
 import BaseRenderer from "@/server/renderer/notion/base-renderer";
 import {Renderer} from "@/server/renderer/renderer";
-import {NotionArticleRenderer} from "@/server/renderer/notion-article-renderer";
+import {RenderContext} from "@/server/renderer/context";
 
 class TableRenderer extends BaseRenderer implements Renderer {
 
-    async render(block: Block) {
+    async render(context: RenderContext, block: Block) {
         if (!block || !block.has_children) {
             return <></>
         }
 
-        const {content} = await this.notionArticleRenderer.render(block.id)
+        const {content} = await context!.renderer.render(block.id)
 
         return <div className="overflow-x-auto">
             <table className="table">

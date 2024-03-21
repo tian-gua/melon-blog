@@ -15,30 +15,30 @@ import ColumnListRenderer from "@/server/renderer/notion/column-list-renderer";
 import BulletedListRenderer from "@/server/renderer/notion/bulleted-list-renderer";
 import Toc from "@/server/renderer/toc";
 import numberedListRenderer from "@/server/renderer/notion/numbered-list-renderer";
+import {RenderContext} from "@/server/renderer/context";
 
 export class NotionArticleRenderer {
 
     private readonly rendererMap: Map<string, Renderer>
     private cache: Map<string, CacheObject<Block[]>>
     private tocMap: Map<string, Toc>
-    private _count: number = 0
 
     constructor() {
         this.cache = new Map<string, CacheObject<Block[]>>()
         this.rendererMap = new Map<string, Renderer>()
-        this.rendererMap.set('heading_1', new H1Renderer(this))
-        this.rendererMap.set('heading_2', new H2Renderer(this))
-        this.rendererMap.set('heading_3', new H3Renderer(this))
-        this.rendererMap.set('image', new ImageRenderer(this))
-        this.rendererMap.set('paragraph', new ParagraphRenderer(this))
-        this.rendererMap.set('code', new CodeRenderer(this))
-        this.rendererMap.set('table', new TableRenderer(this))
-        this.rendererMap.set('table_row', new TableRowRenderer(this))
-        this.rendererMap.set('quote', new QuoteRenderer(this))
-        this.rendererMap.set('column', new ColumnRenderer(this))
-        this.rendererMap.set('column_list', new ColumnListRenderer(this))
-        this.rendererMap.set('bulleted_list_item', new BulletedListRenderer(this))
-        this.rendererMap.set('numbered_list_item', new numberedListRenderer(this))
+        this.rendererMap.set('heading_1', new H1Renderer())
+        this.rendererMap.set('heading_2', new H2Renderer())
+        this.rendererMap.set('heading_3', new H3Renderer())
+        this.rendererMap.set('image', new ImageRenderer())
+        this.rendererMap.set('paragraph', new ParagraphRenderer())
+        this.rendererMap.set('code', new CodeRenderer())
+        this.rendererMap.set('table', new TableRenderer())
+        this.rendererMap.set('table_row', new TableRowRenderer())
+        this.rendererMap.set('quote', new QuoteRenderer())
+        this.rendererMap.set('column', new ColumnRenderer())
+        this.rendererMap.set('column_list', new ColumnListRenderer())
+        this.rendererMap.set('bulleted_list_item', new BulletedListRenderer())
+        this.rendererMap.set('numbered_list_item', new numberedListRenderer())
         this.tocMap = new Map<string, Toc>()
     }
 
@@ -75,7 +75,8 @@ export class NotionArticleRenderer {
         content: React.JSX.Element[],
         toc: Toc | null
     }> {
-        const blocks = await this.getBlockCache(id)
+        const blocks: Block[] = await this.getBlockCache(id)
+        const context = new RenderContext(this, blocks)
 
         const elements: React.JSX.Element[] = []
         if (blocks) {
@@ -83,7 +84,10 @@ export class NotionArticleRenderer {
                 this.initToc(id, name)
             }
 
-            for (const block of blocks) {
+            // @ts-ignore
+            for (const [index, block] of blocks.entries()) {
+                context.setRenderIndex(index)
+
                 const renderer = this.rendererMap.get(block.type)
                 if (!renderer) {
                     console.error(`Not found renderer for block type: ${block.type}`)
@@ -101,20 +105,15 @@ export class NotionArticleRenderer {
                 }
 
                 if (block.type === 'numbered_list_item') {
-                    this._count++
+                    context.increaseNumberListCount()
                 } else {
-                    this._count = 0
+                    context.clearNumberListCount()
                 }
-                elements.push(await renderer?.render(block)!);
+                elements.push(await renderer?.render(context, block)!);
             }
         }
 
         return {content: elements, toc: root ? this.tocMap.get(id)!.arrange() : null};
-    }
-
-
-    get count(): number {
-        return this._count;
     }
 }
 

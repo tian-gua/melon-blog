@@ -1,14 +1,6 @@
 import Link from "next/link";
-import notionArticleRenderer, {NotionArticleRenderer} from "@/server/renderer/notion-article-renderer";
 
 class BaseRenderer {
-
-    protected notionArticleRenderer: NotionArticleRenderer
-
-    constructor(notionArticleRenderer: NotionArticleRenderer) {
-        this.notionArticleRenderer = notionArticleRenderer;
-    }
-
     protected renderRichText(richTexts: RichText[]) {
         if (richTexts.length === 0) return <br/>
         return richTexts.map((richText, index) => {
