@@ -9,14 +9,14 @@ class NumberedListRenderer extends BaseRenderer implements Renderer {
 
         let children = undefined
         if (block.has_children) {
-            const res = await context!.renderer.render(block.id)
+            const res = await context.renderer.render(block.id)
             children = res.content
         }
 
-        return <div key={block.id} className="flex flex-col text-gray-600 text-[0.9em] italic">
+        return <div key={block.id} className="flex flex-col text-gray-500 text-[0.9em]">
             <div className="relative pl-[1.2em]">
                 <span
-                    className="absolute left-0 top-2 text-sm flex items-center text-gray-600 font-bold">{context!.numberListCount}.</span>
+                    className="absolute left-0 top-2 text-sm flex items-center text-gray-600 font-bold">{context.numberListCount}.</span>
                 {this.renderRichText(richTexts)}
             </div>
             {children ? <div className="ml-[2em]">{children}</div> : <></>}

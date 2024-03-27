@@ -23,7 +23,7 @@ export class RenderContext {
     }
 
     get numberListCount(): number {
-        return this.numberListCount
+        return this._numberListCount
     }
 
     increaseNumberListCount() {
