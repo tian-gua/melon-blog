@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Footer = () => {
     return <>
@@ -13,8 +14,8 @@ const Footer = () => {
                     <a className="mr-4" href="https://tailwindcss.com/">tailwindcss</a>
                 </div>
             </div>
-            <p className="mt-10 text-[0.9em] mb-6 flex justify-center">Copyright © 2023 www.tiangua.info
-                鄂ICP备2022015834号</p>
+            <Link className="mt-10 text-[0.8em] mb-6 flex justify-center" href="https://beian.miit.gov.cn/">Copyright © 2023 www.tiangua.info
+                鄂ICP备2022015834号</Link>
         </div>
     </>
 }
