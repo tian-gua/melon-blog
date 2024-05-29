@@ -17,9 +17,10 @@
 }
 
 @font-face {
-    font-family: "FasterOne-Regular";
-    src: url("/FasterOne-Regular.ttf");
+    font-family: "Courgette-Regular";
+    src: url("/Courgette-Regular.ttf");
 }
+
 
 body {
     /*background-color: aliceblue;*/

@@ -6,7 +6,7 @@ import {TypeAnimation} from "react-type-animation";
 const Description = () => {
     return <>
         <div className="w-full h-max px-3">
-            <h1 className="flex flex-col text-[50px] leading-normal font-['FasterOne-Regular'] text-black">
+            <h1 className="flex flex-col text-[50px] leading-normal font-['Courgette-regular'] text-black">
                 <TypeAnimation
                     sequence={[
                         // Same substring at the start will only be typed out once, initially
@@ -16,6 +16,7 @@ const Description = () => {
                     wrapper="span"
                     speed={50}
                     repeat={Infinity}
+                    cursor={true}
                 />
             </h1>
             <div className="mt-2 text-gray-600 antialiased text-[0.9em]">

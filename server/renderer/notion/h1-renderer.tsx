@@ -4,7 +4,7 @@ import {RenderContext} from "@/server/renderer/context";
 
 class H1Renderer extends BaseRenderer implements Renderer {
     async render(context: RenderContext, block: Block) {
-        const text = block[block.type].rich_text[0].plain_text
+        const text = block[block.type].rich_text.map((text: any) => text.plain_text).join("")
         const style = this.processAnnotation(block[block.type].rich_text[0].annotations)
 
         return <h1 id={block.id} className={"text-[1.5em] text-black font-bold block mt-10 mb-2"}

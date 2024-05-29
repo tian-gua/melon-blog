@@ -4,7 +4,7 @@ import {RenderContext} from "@/server/renderer/context";
 
 class H2Renderer extends BaseRenderer implements Renderer {
     async render(context: RenderContext, block: Block) {
-        const text = block[block.type].rich_text[0].plain_text
+        const text = block[block.type].rich_text.map((text: any) => text.plain_text).join("")
         const style = this.processAnnotation(block[block.type].rich_text[0].annotations)
         // style["letterSpacing"] = "2px"
         // style["textShadow"] = "2px 2px 0px #cccccc"

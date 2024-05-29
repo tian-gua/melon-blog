@@ -14,8 +14,8 @@ import ColumnRenderer from "@/server/renderer/notion/column-renderer";
 import ColumnListRenderer from "@/server/renderer/notion/column-list-renderer";
 import BulletedListRenderer from "@/server/renderer/notion/bulleted-list-renderer";
 import Toc from "@/server/renderer/toc";
-import numberedListRenderer from "@/server/renderer/notion/numbered-list-renderer";
 import {RenderContext} from "@/server/renderer/context";
+import NumberedListRenderer from "@/server/renderer/notion/numbered-list-renderer";
 
 export class NotionArticleRenderer {
 
@@ -38,7 +38,7 @@ export class NotionArticleRenderer {
         this.rendererMap.set('column', new ColumnRenderer())
         this.rendererMap.set('column_list', new ColumnListRenderer())
         this.rendererMap.set('bulleted_list_item', new BulletedListRenderer())
-        this.rendererMap.set('numbered_list_item', new numberedListRenderer())
+        this.rendererMap.set('numbered_list_item', new NumberedListRenderer())
         this.tocMap = new Map<string, Toc>()
     }
 
@@ -96,11 +96,11 @@ export class NotionArticleRenderer {
 
                 if (root) {
                     if (block.type === 'heading_1') {
-                        this.tocMap.get(id)!.append(block.id, block.heading_1.rich_text[0].plain_text, 1)
+                        this.tocMap.get(id)!.append(block.id, block.heading_1.rich_text.map((text: any) => text.plain_text).join(''), 1)
                     } else if (block.type === 'heading_2') {
-                        this.tocMap.get(id)!.append(block.id, block.heading_2.rich_text[0].plain_text, 2)
+                        this.tocMap.get(id)!.append(block.id, block.heading_2.rich_text.map((text: any) => text.plain_text).join(''), 2)
                     } else if (block.type === 'heading_3') {
-                        this.tocMap.get(id)!.append(block.id, block.heading_3.rich_text[0].plain_text, 3)
+                        this.tocMap.get(id)!.append(block.id, block.heading_3.rich_text.map((text: any) => text.plain_text).join(''), 3)
                     }
                 }
 

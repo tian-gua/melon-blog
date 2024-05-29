@@ -23,7 +23,7 @@ class NotionService {
             const tags: string[] = properties.Tags.multi_select.map((tag: any) => tag.name)
             const blog: Blog = {
                 id: result.id,
-                title: properties.Title.title[0].plain_text,
+                title: properties.Title.title.map((text: any) => text.plain_text).join(''),
                 date: properties.Date.date.start,
                 type: properties.Type.select.name,
                 category: properties.Category.select?.name,
