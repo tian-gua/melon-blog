@@ -13,7 +13,7 @@ class DevNotionService implements INotionService {
         this.proxy = {
             protocol: 'http',
             host: '127.0.0.1',
-            port: 7890,
+            port: 7897,
         }
     }
 
