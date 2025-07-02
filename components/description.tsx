@@ -22,7 +22,7 @@ const Description = () => {
         <div className="mt-2 text-gray-600 antialiased text-[0.9em]">
           <p className="flex flex-wrap py-1">
             <span>
-              🧑‍💻&nbsp;Java&Go&Python开发者&nbsp;/&nbsp;全栈开发者&nbsp;/&nbsp;
+              🧑‍💻&nbsp;Java｜Go｜Python｜React｜Next.js 开发者&nbsp;/&nbsp;全栈开发者&nbsp;/&nbsp;
             </span>
             <span> Full-stack Developer</span>
           </p>
